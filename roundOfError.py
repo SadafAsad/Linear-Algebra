@@ -154,5 +154,12 @@ def adjugateMatrix(matrix):
     return matrix
 # print(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))))
 
+def multiplyByDetInv(matrix, original_matrix):
+    n = len(matrix)
+    detInv = detn_n(original_matrix)
+    for i in range(n):
+        for j in range(n):
+            matrix[i][j]/=detInv
+    return matrix
+# print(multiplyByDetInv(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))),[[3,0,2],[2,0,-2],[0,1,1]]))
             
-
