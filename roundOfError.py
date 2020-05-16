@@ -141,4 +141,18 @@ def cofactorsMatrix(matrix):
     return matrix
 # print(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]])))
 
+def adjugateMatrix(matrix):
+    n = len(matrix)
+    counter = 0
+    for i in range(n):
+        for j in range(n):
+            if j>=counter:
+                tmp = matrix[i][j]
+                matrix[i][j] = matrix[j][i]
+                matrix[j][i] = tmp
+        counter+=1
+    return matrix
+# print(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))))
+
+            
 
