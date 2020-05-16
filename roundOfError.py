@@ -4,6 +4,7 @@ def matrixInitializer(n, num, data):
     for i in range(n):
         line_data = list()
         matrix.append(line_data)
+        # if matrix b
         if num==3:
             line_data.append(data[counter])
             counter+=1
@@ -22,11 +23,13 @@ def takingMatrixData():
     while _input!='o':
         _input_str = _input.split()
         _input_length = len(_input_str)
+        # if matrix's dimension
         if _input_length==1:
             sample = list()
             samples.append(sample)
             n = int(_input_str[0])
         else:
+            # if start of new sample
             if matrix_num==4:
                 matrix_num = 1
             _input_list = list()
@@ -34,6 +37,7 @@ def takingMatrixData():
             while(i<_input_length):
                 _input_list.append(float(_input_str[i]))
                 i = i + 1
+            # matrix initialize
             sample.append(matrixInitializer(n, matrix_num, _input_list))
             matrix_num+=1
         _input = input()
