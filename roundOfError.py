@@ -80,17 +80,18 @@ def q1(samples):
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
 
-def makeDetMatrix(n, row, column, matrix):
+def makeDetMatrix(row, column, matrix):
     _matrix = list()
+    n = len(matrix)
     for i in range(n):
-        # first row of matrix is eliminated
+        # 'the' row is eliminated
         if i!=row:
-            row = list()
-            for r in range(n):
+            _matrix_row = list()
+            for j in range(n):
                 # 'the' column is eliminated
-                if r!=column:
-                    row.append(matrix[i][r])
-            _matrix.append(row)
+                if j!=column:
+                    _matrix_row.append(matrix[i][j])
+            _matrix.append(_matrix_row)
     return _matrix
 
 def detn_n(matrix):
@@ -101,7 +102,7 @@ def detn_n(matrix):
     det = 0
     for counter in range(n):
         # builds 'the' matrix ...
-        _matrix = makeDetMatrix(n, 0, counter, matrix)
+        _matrix = makeDetMatrix(0, counter, matrix)
         # for + and - ...
         if counter%2==0:
             det+=(matrix[0][counter]*detn_n(_matrix))
@@ -117,6 +118,16 @@ def q2(samples):
         A_det = detn_n(samples[i][0])
         H_det = detn_n(samples[i][1])
         print("Sample " + str(i+1) + ": " + "det(A)=" + str(A_det) + " det(H)=" + str(H_det) + "\n")
+# samples = readSamplesFromFile("linear_solve.data")
+# q2(samples)
 
-samples = readSamplesFromFile("linear_solve.data")
-q2(samples)
+def minorsMatrix(matrix):
+    matrix_length = len(matrix)
+    minors = list()
+    for i in range(matrix_length):
+        row = list()
+        for j in range(matrix_length):
+            row.append(detn_n(makeDetMatrix(i, j, matrix)))
+        minors.append(row)
+    return minors
+# print(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))
