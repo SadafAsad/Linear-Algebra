@@ -133,8 +133,6 @@ def q2(samples):
 def minorsMatrix(matrix):
     matrix_length = len(matrix)
     minors = list()
-    if matrix_length==2:
-        return matrix
     for i in range(matrix_length):
         row = list()
         for j in range(matrix_length):
@@ -145,37 +143,40 @@ def minorsMatrix(matrix):
 
 def cofactorsMatrix(matrix):
     n = len(matrix)
-    _matrix = list()
+    _matrix = zeroMatrix(n)
     for i in range(n):
         for j in range(n):
             if (i%2==0 and j%2!=0) or (i%2!=0 and j%2==0):
-                _matrix.append(-matrix[i][j])
+                _matrix[i][j] = -matrix[i][j]
             else:
-                _matrix.append(matrix[i][j])
+                _matrix[i][j] = matrix[i][j]
     return _matrix
 # print(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]])))
 
 def adjugateMatrix(matrix):
-    _matrix = list()
     n = len(matrix)
+    _matrix = zeroMatrix(n)
     counter = 0
     for i in range(n):
         for j in range(n):
+            _matrix[i][j] = matrix[i][j]
+    for i in range(n):
+        for j in range(n):
             if j>=counter:
-                _matrix[i][j] = matrix[j][i]
-                _matrix[j][i] = matrix[i][j]
-            else:
-                _matrix[i][j] = matrix[i][j]
+                tmp = _matrix[i][j]
+                _matrix[i][j] = _matrix[j][i]
+                _matrix[j][i] = tmp
         counter+=1
     return _matrix
 # print(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))))
 
 def multiplyByDetInv(matrix, original_matrix):
-    _matrix = list()
     n = len(matrix)
-    print(original_matrix)
+    _matrix = zeroMatrix(n)
     detInv = detn_n(original_matrix)
     print(detInv)
+    print(matrix)
+    print(original_matrix)
     for i in range(n):
         for j in range(n):
             _matrix[i][j] = matrix[i][j]/detInv
@@ -183,12 +184,16 @@ def multiplyByDetInv(matrix, original_matrix):
 # print(multiplyByDetInv(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))),[[3,0,2],[2,0,-2],[0,1,1]]))
             
 def matrixInverse(matrix):
+    n = len(matrix)
+    if n==2:
+        tmp = [
+            [matrix[1][1],-matrix[0][1]],
+            [-matrix[1][0],matrix[0][0]]
+        ]
+        return multiplyByDetInv(tmp,matrix)
     minor_matrix = minorsMatrix(matrix)
-    print(minor_matrix)
     cofactor_matrix = cofactorsMatrix(minor_matrix)
-    print(cofactor_matrix)
-    adjugate_matrix = adjugateMatrix(cofactor_matrix)
-    print(adjugate_matrix)
+    adjugate_matrix = adjugateMatrix(cofactor_matrix) 
     inverse_matrix = multiplyByDetInv(adjugate_matrix, matrix)
     return inverse_matrix 
 # print(matrixInverse([[3,0,2],[2,0,-2],[0,1,1]]))
