@@ -2,19 +2,19 @@ def matrixInitializer(n, num, data):
     matrix = list()
     counter = 0
     for i in range(n):
-        line_data = list()
-        matrix.append(line_data)
+        row_data = list()
+        matrix.append(row_data)
         # if matrix b
         if num==3:
-            line_data.append(data[counter])
+            row_data.append(data[counter])
             counter+=1
         else:
             for r in range(n):
-                line_data.append(data[counter])
+                row_data.append(data[counter])
                 counter+=1
     return matrix
 
-def takingMatrixData():
+def takingSamplesFromTerminal():
     _input = input()
     samples = list()
     matrix_num = 1
@@ -41,14 +41,42 @@ def takingMatrixData():
         _input = input()
     return samples
 
+def readSamplesFromFile(file_name):
+    file = open(file_name, "r")
+    file_lines = file.readlines()
+    samples = list()
+    matrix_num = 1
+    for line in file_lines:
+        if line!='0':
+            line_str = line.split()
+            line_length = len(line_str)
+            # if matrix's dimension
+            if line_length==1:
+                sample = list()
+                samples.append(sample)
+                n = int(line_str[0])
+            else:
+                # if start of new sample
+                if matrix_num==4:
+                    matrix_num = 1
+                line_list = list()
+                i = 0
+                while(i<line_length):
+                    line_list.append(float(line_str[i]))
+                    i = i + 1
+                # matrix initialize
+                sample.append(matrixInitializer(n, matrix_num, line_list))
+                matrix_num+=1
+    return samples
+
 def q1(samples):
     counter = 1
     for sample in samples:
         print("Sample " + str(counter) + ": " + str(sample))
         counter+=1
         
-# ans = takingMatrixData()
-# q1(ans)
+ans = readSamplesFromFile("linear_solve.data")
+q1(ans)
 
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
