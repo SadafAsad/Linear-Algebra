@@ -80,15 +80,15 @@ def q1(samples):
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
 
-def makeDetMatrix(n, counter, matrix):
+def makeDetMatrix(n, row, column, matrix):
     _matrix = list()
     for i in range(n):
         # first row of matrix is eliminated
-        if i!=0:
+        if i!=row:
             row = list()
             for r in range(n):
                 # 'the' column is eliminated
-                if r!=counter:
+                if r!=column:
                     row.append(matrix[i][r])
             _matrix.append(row)
     return _matrix
@@ -101,7 +101,7 @@ def detn_n(matrix):
     det = 0
     for counter in range(n):
         # builds 'the' matrix ...
-        _matrix = makeDetMatrix(n, counter, matrix)
+        _matrix = makeDetMatrix(n, 0, counter, matrix)
         # for + and - ...
         if counter%2==0:
             det+=(matrix[0][counter]*detn_n(_matrix))
@@ -117,3 +117,6 @@ def q2(samples):
         A_det = detn_n(samples[i][0])
         H_det = detn_n(samples[i][1])
         print("Sample " + str(i+1) + ": " + "det(A)=" + str(A_det) + " det(H)=" + str(H_det) + "\n")
+
+samples = readSamplesFromFile("linear_solve.data")
+q2(samples)
