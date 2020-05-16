@@ -73,10 +73,9 @@ def q1(samples):
     counter = 1
     for sample in samples:
         print("Sample " + str(counter) + ": " + str(sample))
-        counter+=1
-        
-ans = readSamplesFromFile("linear_solve.data")
-q1(ans)
+        counter+=1 
+# ans = readSamplesFromFile("linear_solve.data")
+# q1(ans)
 
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
@@ -109,6 +108,12 @@ def detn_n(matrix):
         else:
             det-=(matrix[0][counter]*detn_n(_matrix))
     return det
-
 # print(detn_n([[6,1,1],[4,-2,5],[2,8,7]]))
 # print(detn_n([[0,10,2,3],[1,12,5,11],[12,10,2,4],[1,3,5,10]]))
+
+def q2(samples):
+    samples_length = len(samples)
+    for i in range(samples_length):
+        A_det = detn_n(samples[i][0])
+        H_det = detn_n(samples[i][1])
+        print("Sample " + str(i+1) + ": " + "det(A)=" + str(A_det) + " det(H)=" + str(H_det) + "\n")
