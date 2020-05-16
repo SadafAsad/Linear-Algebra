@@ -52,14 +52,15 @@ def q1(samples):
 
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
-# print(det2_2([[3,8],[4,6]]))
 
 def makeDetMatrix(n, counter, matrix):
     _matrix = list()
     for i in range(n):
+        # first row of matrix is eliminated
         if i!=0:
             row = list()
             for r in range(n):
+                # 'the' column is eliminated
                 if r!=counter:
                     row.append(matrix[i][r])
             _matrix.append(row)
@@ -72,7 +73,9 @@ def detn_n(matrix):
   
     det = 0
     for counter in range(n):
+        # builds 'the' matrix ...
         _matrix = makeDetMatrix(n, counter, matrix)
+        # for + and - ...
         if counter%2==0:
             det+=(matrix[0][counter]*detn_n(_matrix))
         else:
