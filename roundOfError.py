@@ -47,8 +47,19 @@ def q1(samples):
         print("Sample " + str(counter) + ": " + str(sample))
         counter+=1
         
-ans = takingMatrixData()
-q1(ans)
+# ans = takingMatrixData()
+# q1(ans)
 
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
+# print(det2_2([[3,8],[4,6]]))
+
+def det3_3(matrix):
+    x1 = matrix[0][0]*( det2_2([ [matrix[1][1],matrix[1][2]], 
+                                 [matrix[2][1],matrix[2][2]] ]) )
+    x2 = matrix[0][1]*( det2_2([ [matrix[1][0],matrix[1][2]], 
+                                 [matrix[2][0],matrix[2][2]] ]) )
+    x3 = matrix[0][2]*( det2_2([ [matrix[1][0],matrix[1][1]], 
+                                 [matrix[2][0],matrix[2][1]] ]) )
+    return x1-x2+x3
+# print(det3_3([[6,1,1],[4,-2,5],[2,8,7]]))
