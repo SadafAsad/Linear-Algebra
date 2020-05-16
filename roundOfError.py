@@ -14,8 +14,6 @@ def matrixInitializer(n, num, data):
                 counter+=1
     return matrix
 
-# def matrixDisplay(matrix):
-
 def takingMatrixData():
     _input = input()
     samples = list()
