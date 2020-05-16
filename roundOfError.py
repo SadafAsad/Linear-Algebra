@@ -163,3 +163,10 @@ def multiplyByDetInv(matrix, original_matrix):
     return matrix
 # print(multiplyByDetInv(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))),[[3,0,2],[2,0,-2],[0,1,1]]))
             
+def matrixInverse(matrix):
+    minor_matrix = minorsMatrix(matrix)
+    cofactor_matrix = cofactorsMatrix(minor_matrix)
+    adjugate_matrix = adjugateMatrix(cofactor_matrix)
+    inverse_matrix = multiplyByDetInv(adjugate_matrix, matrix)
+    return inverse_matrix 
+# print(matrixInverse([[3,0,2],[2,0,-2],[0,1,1]]))
