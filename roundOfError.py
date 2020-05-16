@@ -131,3 +131,14 @@ def minorsMatrix(matrix):
         minors.append(row)
     return minors
 # print(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))
+
+def cofactorsMatrix(matrix):
+    n = len(matrix)
+    for i in range(n):
+        for j in range(n):
+            if (i%2==0 and j%2!=0) or (i%2!=0 and j%2==0):
+                matrix[i][j] = -matrix[i][j]
+    return matrix
+# print(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]])))
+
+
