@@ -39,8 +39,11 @@ def takingMatrixData():
         _input = input()
     return samples
 
-# ans = matrixInitializer(2, [1.0, 3.2, 2.1, 1.1])
-# print(ans)
-
+def q1(samples):
+    counter = 1
+    for sample in samples:
+        print("Sample " + str(counter) + ": " + str(sample))
+        counter+=1
+        
 ans = takingMatrixData()
-print(ans)
+q1(ans)
