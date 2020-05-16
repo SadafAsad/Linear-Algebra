@@ -170,3 +170,24 @@ def matrixInverse(matrix):
     inverse_matrix = multiplyByDetInv(adjugate_matrix, matrix)
     return inverse_matrix 
 # print(matrixInverse([[3,0,2],[2,0,-2],[0,1,1]]))
+
+def matrixMultiply(a, b):
+    ans = list()
+    a_rows_number = len(a)
+    a_columns_number = len(a[0])
+    b_columns_number = len(b[0])
+    for i in range(a_rows_number):
+        row_mult = list()
+        for k in range(b_columns_number):
+            sum = 0
+            for j in range(a_columns_number):
+                sum+=a[i][j]*b[j][k]
+            row_mult.append(sum)
+        ans.append(row_mult)
+    return ans
+# print(matrixMultiply([[1,2,3],[4,5,6]],[[7,8],[9,10],[11,12]]))
+
+def solveXx(X, x):
+    # X=AorH x=b
+    X_inverse = matrixInverse(X)
+    return matrixMultiply(X_inverse, x)
