@@ -54,12 +54,29 @@ def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
 # print(det2_2([[3,8],[4,6]]))
 
-def det3_3(matrix):
-    x1 = matrix[0][0]*( det2_2([ [matrix[1][1],matrix[1][2]], 
-                                 [matrix[2][1],matrix[2][2]] ]) )
-    x2 = matrix[0][1]*( det2_2([ [matrix[1][0],matrix[1][2]], 
-                                 [matrix[2][0],matrix[2][2]] ]) )
-    x3 = matrix[0][2]*( det2_2([ [matrix[1][0],matrix[1][1]], 
-                                 [matrix[2][0],matrix[2][1]] ]) )
-    return x1-x2+x3
-# print(det3_3([[6,1,1],[4,-2,5],[2,8,7]]))
+def makeDetMatrix(n, counter, matrix):
+    _matrix = list()
+    for i in range(n):
+        if i!=0:
+            row = list()
+            for r in range(n):
+                if r!=counter:
+                    row.append(matrix[i][r])
+            _matrix.append(row)
+    return _matrix
+
+def detn_n(matrix):
+    n = len(matrix)
+    if n==2:
+        return det2_2(matrix)
+  
+    det = 0
+    for counter in range(n):
+        _matrix = makeDetMatrix(n, counter, matrix)
+        if counter%2==0:
+            det+=(matrix[0][counter]*detn_n(_matrix))
+        else:
+            det-=(matrix[0][counter]*detn_n(_matrix))
+    return det
+
+# print(detn_n([[6,1,1],[4,-2,5],[2,8,7]]))
