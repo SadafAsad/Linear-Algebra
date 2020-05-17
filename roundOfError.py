@@ -1,8 +1,10 @@
-def zeroMatrix(n):
+import math
+
+def zeroMatrix(n,m):
     matrix = list()
     for i in range(n):
         row = list()
-        for j in range(n):
+        for j in range(m):
             row.append(0)
         matrix.append(row)
     return matrix
@@ -146,7 +148,7 @@ def minorsMatrix(matrix):
 
 def cofactorsMatrix(matrix):
     n = len(matrix)
-    _matrix = zeroMatrix(n)
+    _matrix = zeroMatrix(n,n)
     for i in range(n):
         for j in range(n):
             if (i%2==0 and j%2!=0) or (i%2!=0 and j%2==0):
@@ -158,7 +160,7 @@ def cofactorsMatrix(matrix):
 
 def adjugateMatrix(matrix):
     n = len(matrix)
-    _matrix = zeroMatrix(n)
+    _matrix = zeroMatrix(n,n)
     counter = 0
     for i in range(n):
         for j in range(n):
@@ -181,7 +183,7 @@ def adjugateMatrix(matrix):
 
 def multiplyByDetInv(matrix, original_matrix):
     n = len(matrix)
-    _matrix = zeroMatrix(n)
+    _matrix = zeroMatrix(n,n)
     det = detn_n(original_matrix)
     for i in range(n):
         for j in range(n):
@@ -221,13 +223,51 @@ def solveXx(a_h, b):
 # print(solveXx([[3,3.2],[3.5,3.6]],[[118.4],[135.2]]))
 
 def matrixMinus(a, b):
-    n = len(a)
-    ans = zeroMatrix(n)
-    for i in range(n):
-        for j in range(n):
+    row_n = len(a)
+    column_n = len(a[0])
+    ans = zeroMatrix(row_n,column_n)
+    for i in range(row_n):
+        for j in range(column_n):
             ans[i][j] = a[i][j]-b[i][j]
     return ans
 
 def residualVector(b, a_h, x):
     a_h_mult_x = matrixMultiply(a_h,x)
     return matrixMinus(b, a_h_mult_x)
+
+def residualVectorNorm(vector):
+    sum = 0
+    n = len(vector)
+    for i in range(n):
+        sum+=(vector[i][0])**2
+    return math.sqrt(sum)
+
+samples = readSamplesFromFile("linear_solve.data")
+n = len(samples)
+for i in range(n):
+    A = samples[i][0]
+    H = samples[i][1]
+    b = samples[i][2]
+    A_det = detn_n(A)
+    H_det = detn_n(H)
+    print("-------------------Sample " + str(i+1) + "----------------")
+    print("det(A)=" + str(A_det) + " det(H)=" + str(H_det))
+    if A_det!=0 and H_det!=0:
+        A_inverse = matrixInverse(A)
+        H_inverse = matrixInverse(H)
+        print("A*-1=" + str(A_inverse) + " H*-1=" + str(H_inverse))
+
+        x1 = solveXx(A, b)
+        x2 = solveXx(H, b)
+        print("Ax=b => x=" + str(x1))
+        print("Hx=b => x=" + str(x2))
+
+        v1 = residualVector(b, A, x1)
+        v2 = residualVector(b, H, x2)
+        print("b-Ax=" + str(v1))
+        print("b-Hx=" + str(v2))
+
+        n1 = residualVectorNorm(v1)
+        n2 = residualVectorNorm(v2)
+        print("||b-Ax||=" + str(n1))
+        print("||b-Hx||=" + str(n2))
