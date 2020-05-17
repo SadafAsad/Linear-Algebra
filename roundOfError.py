@@ -248,14 +248,15 @@ for i in range(n):
     A = samples[i][0]
     H = samples[i][1]
     b = samples[i][2]
+    print("-------------------Sample " + str(i+1) + "----------------")
     A_det = detn_n(A)
     H_det = detn_n(H)
-    print("-------------------Sample " + str(i+1) + "----------------")
     print("det(A)=" + str(A_det) + " det(H)=" + str(H_det))
     if A_det!=0 and H_det!=0:
         A_inverse = matrixInverse(A)
         H_inverse = matrixInverse(H)
-        print("A*-1=" + str(A_inverse) + " H*-1=" + str(H_inverse))
+        print("A*-1=" + str(A_inverse))
+        print("H*-1=" + str(H_inverse))
 
         x1 = solveXx(A, b)
         x2 = solveXx(H, b)
