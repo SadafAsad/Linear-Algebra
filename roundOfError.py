@@ -213,9 +213,21 @@ def matrixMultiply(a, b):
     return ans
 # print(matrixMultiply([[1,2,3],[4,5,6]],[[7,8],[9,10],[11,12]]))
 
-def solveXx(X, x):
+def solveXx(a_h, b):
     # X=AorH x=b
-    X_inverse = matrixInverse(X)
-    return matrixMultiply(X_inverse, x)
+    a_h_inverse = matrixInverse(a_h)
+    return matrixMultiply(a_h_inverse, b)
 # print(solveXx([[3,0,2],[2,0,-2],[0,1,1]],[[4,10,8],[7,6,3],[12,11,10]]))
 # print(solveXx([[3,3.2],[3.5,3.6]],[[118.4],[135.2]]))
+
+def matrixMinus(a, b):
+    n = len(a)
+    ans = zeroMatrix(n)
+    for i in range(n):
+        for j in range(n):
+            ans[i][j] = a[i][j]-b[i][j]
+    return ans
+
+def residualVector(b, a_h, x):
+    a_h_mult_x = matrixMultiply(a_h,x)
+    return matrixMinus(b, a_h_mult_x)
