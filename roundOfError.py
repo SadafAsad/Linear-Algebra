@@ -88,6 +88,7 @@ def q1(samples):
 
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
+# print(det2_2([[3,3.2],[3.5,3.6]]))
 
 def makeDetMatrix(row, column, matrix):
     _matrix = list()
@@ -133,6 +134,8 @@ def q2(samples):
 def minorsMatrix(matrix):
     matrix_length = len(matrix)
     minors = list()
+    if matrix_length==2:
+        return matrix
     for i in range(matrix_length):
         row = list()
         for j in range(matrix_length):
@@ -160,6 +163,11 @@ def adjugateMatrix(matrix):
     for i in range(n):
         for j in range(n):
             _matrix[i][j] = matrix[i][j]
+    if n==2:
+        return [
+            [_matrix[1][1],_matrix[0][1]],
+            [_matrix[1][0],_matrix[0][0]]
+        ]
     for i in range(n):
         for j in range(n):
             if j>=counter:
@@ -169,31 +177,22 @@ def adjugateMatrix(matrix):
         counter+=1
     return _matrix
 # print(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))))
+# print(adjugateMatrix([[3,-3.2],[-3.5,3.6]]))
 
 def multiplyByDetInv(matrix, original_matrix):
     n = len(matrix)
     _matrix = zeroMatrix(n)
-    detInv = detn_n(original_matrix)
-    print(detInv)
-    print(matrix)
-    print(original_matrix)
+    det = detn_n(original_matrix)
     for i in range(n):
         for j in range(n):
-            _matrix[i][j] = matrix[i][j]/detInv
+            _matrix[i][j] = matrix[i][j]/det
     return _matrix
 # print(multiplyByDetInv(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))),[[3,0,2],[2,0,-2],[0,1,1]]))
             
 def matrixInverse(matrix):
-    n = len(matrix)
-    if n==2:
-        tmp = [
-            [matrix[1][1],-matrix[0][1]],
-            [-matrix[1][0],matrix[0][0]]
-        ]
-        return multiplyByDetInv(tmp,matrix)
     minor_matrix = minorsMatrix(matrix)
     cofactor_matrix = cofactorsMatrix(minor_matrix)
-    adjugate_matrix = adjugateMatrix(cofactor_matrix) 
+    adjugate_matrix = adjugateMatrix(cofactor_matrix)
     inverse_matrix = multiplyByDetInv(adjugate_matrix, matrix)
     return inverse_matrix 
 # print(matrixInverse([[3,0,2],[2,0,-2],[0,1,1]]))
@@ -217,6 +216,6 @@ def matrixMultiply(a, b):
 def solveXx(X, x):
     # X=AorH x=b
     X_inverse = matrixInverse(X)
-    print(X_inverse)
     return matrixMultiply(X_inverse, x)
-print(solveXx([[3,3.2],[3.5,3.6]],[[118.4],[135.2]]))
+# print(solveXx([[3,0,2],[2,0,-2],[0,1,1]],[[4,10,8],[7,6,3],[12,11,10]]))
+# print(solveXx([[3,3.2],[3.5,3.6]],[[118.4],[135.2]]))
