@@ -25,33 +25,6 @@ def matrixInitializer(n, num, data):
                 counter+=1
     return matrix
 
-def takingSamplesFromTerminal():
-    _input = input()
-    samples = list()
-    matrix_num = 1
-    while _input!='o':
-        _input_str = _input.split()
-        _input_length = len(_input_str)
-        # if matrix's dimension
-        if _input_length==1:
-            sample = list()
-            samples.append(sample)
-            n = int(_input_str[0])
-        else:
-            # if start of new sample
-            if matrix_num==4:
-                matrix_num = 1
-            _input_list = list()
-            i = 0
-            while(i<_input_length):
-                _input_list.append(float(_input_str[i]))
-                i = i + 1
-            # matrix initialize
-            sample.append(matrixInitializer(n, matrix_num, _input_list))
-            matrix_num+=1
-        _input = input()
-    return samples
-
 def readSamplesFromFile(file_name):
     file = open(file_name, "r")
     file_lines = file.readlines()
@@ -74,23 +47,14 @@ def readSamplesFromFile(file_name):
                 i = 0
                 while(i<line_length):
                     line_list.append(float(line_str[i]))
-                    i = i + 1
+                    i+=1
                 # matrix initialize
                 sample.append(matrixInitializer(n, matrix_num, line_list))
                 matrix_num+=1
     return samples
 
-def q1(samples):
-    counter = 1
-    for sample in samples:
-        print("Sample " + str(counter) + ": " + str(sample))
-        counter+=1 
-# ans = readSamplesFromFile("linear_solve.data")
-# q1(ans)
-
 def det2_2(matrix):
     return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
-# print(det2_2([[3,3.2],[3.5,3.6]]))
 
 def makeDetMatrix(row, column, matrix):
     _matrix = list()
@@ -115,27 +79,17 @@ def detn_n(matrix):
     for counter in range(n):
         # builds 'the' matrix ...
         _matrix = makeDetMatrix(0, counter, matrix)
-        # for + and - ...
+        # for + and -
         if counter%2==0:
             det+=(matrix[0][counter]*detn_n(_matrix))
         else:
             det-=(matrix[0][counter]*detn_n(_matrix))
     return det
-# print(detn_n([[6,1,1],[4,-2,5],[2,8,7]]))
-# print(detn_n([[0,10,2,3],[1,12,5,11],[12,10,2,4],[1,3,5,10]]))
-
-def q2(samples):
-    samples_length = len(samples)
-    for i in range(samples_length):
-        A_det = detn_n(samples[i][0])
-        H_det = detn_n(samples[i][1])
-        print("Sample " + str(i+1) + ": " + "det(A)=" + str(A_det) + " det(H)=" + str(H_det) + "\n")
-# samples = readSamplesFromFile("linear_solve.data")
-# q2(samples)
 
 def minorsMatrix(matrix):
     matrix_length = len(matrix)
     minors = list()
+    # if 2x2 matrix
     if matrix_length==2:
         return matrix
     for i in range(matrix_length):
@@ -144,7 +98,6 @@ def minorsMatrix(matrix):
             row.append(detn_n(makeDetMatrix(i, j, matrix)))
         minors.append(row)
     return minors
-# print(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))
 
 def cofactorsMatrix(matrix):
     n = len(matrix)
@@ -156,7 +109,6 @@ def cofactorsMatrix(matrix):
             else:
                 _matrix[i][j] = matrix[i][j]
     return _matrix
-# print(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]])))
 
 def adjugateMatrix(matrix):
     n = len(matrix)
@@ -165,6 +117,7 @@ def adjugateMatrix(matrix):
     for i in range(n):
         for j in range(n):
             _matrix[i][j] = matrix[i][j]
+    # if 2x2 matrix
     if n==2:
         return [
             [_matrix[1][1],_matrix[0][1]],
@@ -178,8 +131,6 @@ def adjugateMatrix(matrix):
                 _matrix[j][i] = tmp
         counter+=1
     return _matrix
-# print(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))))
-# print(adjugateMatrix([[3,-3.2],[-3.5,3.6]]))
 
 def multiplyByDetInv(matrix, original_matrix):
     n = len(matrix)
@@ -189,7 +140,6 @@ def multiplyByDetInv(matrix, original_matrix):
         for j in range(n):
             _matrix[i][j] = matrix[i][j]/det
     return _matrix
-# print(multiplyByDetInv(adjugateMatrix(cofactorsMatrix(minorsMatrix([[3,0,2],[2,0,-2],[0,1,1]]))),[[3,0,2],[2,0,-2],[0,1,1]]))
             
 def matrixInverse(matrix):
     minor_matrix = minorsMatrix(matrix)
@@ -197,7 +147,6 @@ def matrixInverse(matrix):
     adjugate_matrix = adjugateMatrix(cofactor_matrix)
     inverse_matrix = multiplyByDetInv(adjugate_matrix, matrix)
     return inverse_matrix 
-# print(matrixInverse([[3,0,2],[2,0,-2],[0,1,1]]))
 
 def matrixMultiply(a, b):
     ans = list()
@@ -213,14 +162,10 @@ def matrixMultiply(a, b):
             row_mult.append(sum)
         ans.append(row_mult)
     return ans
-# print(matrixMultiply([[1,2,3],[4,5,6]],[[7,8],[9,10],[11,12]]))
 
 def solveXx(a_h, b):
-    # X=AorH x=b
     a_h_inverse = matrixInverse(a_h)
     return matrixMultiply(a_h_inverse, b)
-# print(solveXx([[3,0,2],[2,0,-2],[0,1,1]],[[4,10,8],[7,6,3],[12,11,10]]))
-# print(solveXx([[3,3.2],[3.5,3.6]],[[118.4],[135.2]]))
 
 def matrixMinus(a, b):
     row_n = len(a)
@@ -242,32 +187,39 @@ def residualVectorNorm(vector):
         sum+=(vector[i][0])**2
     return math.sqrt(sum)
 
+# ---------- q1 ----------
 samples = readSamplesFromFile("linear_solve.data")
 n = len(samples)
 for i in range(n):
     A = samples[i][0]
     H = samples[i][1]
     b = samples[i][2]
-    print("-------------------Sample " + str(i+1) + "----------------")
+    print("-------------------- Sample " + str(i+1) + "--------------------")
+    # ---------- q2 ----------
     A_det = detn_n(A)
     H_det = detn_n(H)
-    print("det(A)=" + str(A_det) + " det(H)=" + str(H_det))
+    print("det(A)=" + str(A_det))
+    print("det(H)=" + str(H_det))
     if A_det!=0 and H_det!=0:
+        # ---------- q3 ----------
         A_inverse = matrixInverse(A)
         H_inverse = matrixInverse(H)
         print("A*-1=" + str(A_inverse))
         print("H*-1=" + str(H_inverse))
 
+        # ---------- q4 ----------
         x1 = solveXx(A, b)
         x2 = solveXx(H, b)
         print("Ax=b => x=" + str(x1))
         print("Hx=b => x=" + str(x2))
 
+        # ---------- q5 ----------
         v1 = residualVector(b, A, x1)
         v2 = residualVector(b, H, x2)
         print("b-Ax=" + str(v1))
         print("b-Hx=" + str(v2))
 
+        # ---------- q6 ----------
         n1 = residualVectorNorm(v1)
         n2 = residualVectorNorm(v2)
         print("||b-Ax||=" + str(n1))
