@@ -187,40 +187,43 @@ def residualVectorNorm(vector):
         sum+=(vector[i][0])**2
     return math.sqrt(sum)
 
-# ---------- q1 ----------
-samples = readSamplesFromFile("linear_solve.data")
-n = len(samples)
-for i in range(n):
-    A = samples[i][0]
-    H = samples[i][1]
-    b = samples[i][2]
-    print("-------------------- Sample " + str(i+1) + "--------------------")
-    # ---------- q2 ----------
-    A_det = detn_n(A)
-    H_det = detn_n(H)
-    print("det(A)=" + str(A_det))
-    print("det(H)=" + str(H_det))
-    if A_det!=0 and H_det!=0:
-        # ---------- q3 ----------
-        A_inverse = matrixInverse(A)
-        H_inverse = matrixInverse(H)
-        print("A*-1=" + str(A_inverse))
-        print("H*-1=" + str(H_inverse))
+def roundOfError(data_file_name):
+    # ---------- q1 ----------
+    samples = readSamplesFromFile(data_file_name)
+    n = len(samples)
+    for i in range(n):
+        A = samples[i][0]
+        H = samples[i][1]
+        b = samples[i][2]
+        print("-------------------- Sample " + str(i+1) + "--------------------")
+        # ---------- q2 ----------
+        A_det = detn_n(A)
+        H_det = detn_n(H)
+        print("det(A)=" + str(A_det))
+        print("det(H)=" + str(H_det))
+        if A_det!=0 and H_det!=0:
+            # ---------- q3 ----------
+            A_inverse = matrixInverse(A)
+            H_inverse = matrixInverse(H)
+            print("A*-1=" + str(A_inverse))
+            print("H*-1=" + str(H_inverse))
 
-        # ---------- q4 ----------
-        x1 = solveXx(A, b)
-        x2 = solveXx(H, b)
-        print("Ax=b => x=" + str(x1))
-        print("Hx=b => x=" + str(x2))
+            # ---------- q4 ----------
+            x1 = solveXx(A, b)
+            x2 = solveXx(H, b)
+            print("Ax=b => x=" + str(x1))
+            print("Hx=b => x=" + str(x2))
 
-        # ---------- q5 ----------
-        v1 = residualVector(b, A, x1)
-        v2 = residualVector(b, H, x2)
-        print("b-Ax=" + str(v1))
-        print("b-Hx=" + str(v2))
+            # ---------- q5 ----------
+            v1 = residualVector(b, A, x1)
+            v2 = residualVector(b, H, x2)
+            print("b-Ax=" + str(v1))
+            print("b-Hx=" + str(v2))
 
-        # ---------- q6 ----------
-        n1 = residualVectorNorm(v1)
-        n2 = residualVectorNorm(v2)
-        print("||b-Ax||=" + str(n1))
-        print("||b-Hx||=" + str(n2))
+            # ---------- q6 ----------
+            n1 = residualVectorNorm(v1)
+            n2 = residualVectorNorm(v2)
+            print("||b-Ax||=" + str(n1))
+            print("||b-Hx||=" + str(n2))
+
+roundOfError("linear_solve2.data")
