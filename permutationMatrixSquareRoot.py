@@ -14,7 +14,21 @@ def readDataFromFile(file_name):
     for i in range(sample_counter):
         n = int(file_lines[2*i])
         one_s_str = file_lines[(2*i)+1].split()
-
+        cycles_list = list()
+        cycle = list()
+        here = 0
+        for r in range(n):
+            x = one_s_str[r]
+            cycle.append(x)
+            if x==r:
+                cycles_list.append(cycle)
+                cycle = list()
+                here = 1
+            else:
+                here = 0
+        if here==0:
+            cycles_list.append(cycle)
+    return cycles_list
 
 def hasSqr(matrix_str):
     length = len(matrix_str)
@@ -39,3 +53,10 @@ def hasSqr(matrix_str):
             if even_length_num%2==0:
                 return 1
         return 0
+
+samples = readDataFromFile("data.in")
+counter = 1
+for sample in samples:
+    if not hasSqr(sample):
+        print("Sample " + str(counter) + "impossible")
+    counter+=1
