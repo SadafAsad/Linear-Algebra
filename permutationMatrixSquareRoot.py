@@ -18,22 +18,14 @@ def readDataFromFile(file_name):
         index = (2*(i+1))-1
         n = int(file_lines[index])
         one_s_str = file_lines[index+1].split()
-        # print(len(one_s_str))
         cycles_list = list()
-        cycle = list()
-        here = 0
         for r in range(n):
+            cycle = list()
             x = int(one_s_str[r])
+            while x!=r:
+                cycle.append(x)
+                x = int(one_s_str[x])
             cycle.append(x)
-            if int(one_s_str[x])==r:
-                if x!=r:
-                    cycle.append(r)
-                cycles_list.append(cycle)
-                cycle = list()
-                here = 1
-            else:
-                here = 0
-        if here==0:
             cycles_list.append(cycle)
 
         for cycle in cycles_list:
