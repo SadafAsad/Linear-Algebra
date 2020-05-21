@@ -9,6 +9,25 @@ def zeroMatrix(n):
         matrix.append(row)
     return matrix
 
+def createCycleList(n, data_str):
+    cycles_list = list()
+    for r in range(n):
+        cycle = list()
+        x = int(data_str)
+        while x!=r:
+            cycle.append(x)
+            x = int(data_str[x])
+        cycle.append(x)
+        cycles_list.append(cycle)
+
+    for cycle in cycles_list:
+        cycle.sort()
+
+    cycles_list.sort()
+    new_cycles_list = list(cycles_list for cycles_list,_ in itertools.groupby(cycles_list))
+    return new_cycles_list
+
+
 def readDataFromFile(file_name):
     file = open(file_name, "r")
     file_lines = file.readlines()
@@ -17,24 +36,9 @@ def readDataFromFile(file_name):
     for i in range(sample_counter):
         index = (2*(i+1))-1
         n = int(file_lines[index])
-        one_s_str = file_lines[index+1].split()
-        cycles_list = list()
-        for r in range(n):
-            cycle = list()
-            x = int(one_s_str[r])
-            while x!=r:
-                cycle.append(x)
-                x = int(one_s_str[x])
-            cycle.append(x)
-            cycles_list.append(cycle)
-
-        for cycle in cycles_list:
-            cycle.sort()
-
-        cycles_list.sort()
-        new_cycles_list = list(cycles_list for cycles_list,_ in itertools.groupby(cycles_list))
-
-        samples.append(new_cycles_list)
+        one_s = file_lines[index+1].split()
+        cycle_list = createCycleList(n, one_s)
+        samples.append(cycle_list)
     return samples
 
 def hasSqr(cycle_list):
