@@ -13,7 +13,7 @@ def createCycleList(n, data_str):
     cycles_list = list()
     for r in range(n):
         cycle = list()
-        x = int(data_str)
+        x = int(data_str[r])
         while x!=r:
             cycle.append(x)
             x = int(data_str[x])
