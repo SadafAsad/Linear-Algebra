@@ -27,7 +27,6 @@ def createCycleList(n, data_str):
     new_cycles_list = list(cycles_list for cycles_list,_ in itertools.groupby(cycles_list))
     return new_cycles_list
 
-
 def readDataFromFile(file_name):
     file = open(file_name, "r")
     file_lines = file.readlines()
@@ -49,14 +48,16 @@ def hasSqr(cycle_list):
             even_num+=1
         else:
             odd_num+=1
+            
     if even_num%2==0:
         if odd_num==0 or odd_num%2==1:
             return 1
     return 0
 
 samples = readDataFromFile("data.in")
-print(samples[0])
+print(samples[2])
 print(samples[5])
+print(samples[8])
 counter = 1
 for sample in samples:
     if not hasSqr(sample):
