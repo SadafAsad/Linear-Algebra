@@ -39,26 +39,21 @@ def readDataFromFile(file_name):
     return samples
 
 def hasSqr(cycle_list):
-    even_num = 0
-    for cycle in cycle_list:
-        if len(cycle)%2==0:
-            even_num+=1
-    if even_num%2==0:
-        return 1
-    return 0
+    n = len(cycle_list)
+    for i in range(n):
+        x = len(cycle_list[i])
+        counter = 0
+        if x%2==0:
+            for r in range(n):
+                if x==len(cycle_list[r]):
+                    counter+=1
+        if counter%2==1:
+            return 0
+    return 1
 
 samples = readDataFromFile("data.in")
-# print(samples[0])
-# print(samples[1])
-# print(samples[2])
-# print(samples[3])
-# print(samples[4])
-# print(samples[5])
-# print(samples[6])
-# print(samples[7])
-print(samples[44])
-# counter = 1
-# for sample in samples:
-#     if not hasSqr(sample):
-#         print("Sample " + str(counter) + " impossible")
-#     counter+=1
+counter = 1
+for sample in samples:
+    if not hasSqr(sample):
+        print("Sample " + str(counter) + " impossible")
+    counter+=1
