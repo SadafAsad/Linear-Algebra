@@ -25,13 +25,6 @@ def decomposition(n, data_str):
             cycles_list.append(cycle)
     return cycles_list
 
-    # for cycle in cycles_list:
-    #     cycle.sort()
-
-    # cycles_list.sort()
-    # new_cycles_list = list(cycles_list for cycles_list,_ in itertools.groupby(cycles_list))
-    # return new_cycles_list
-
 def readDataFromFile(file_name):
     file = open(file_name, "r")
     file_lines = file.readlines()
