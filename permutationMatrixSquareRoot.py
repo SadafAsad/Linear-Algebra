@@ -39,26 +39,24 @@ def readDataFromFile(file_name):
     return samples
 
 def hasSqr(cycle_list):
-    odd_num = 0
     even_num = 0
     for cycle in cycle_list:
         if len(cycle)%2==0:
             even_num+=1
-        else:
-            odd_num+=1
-
+    if even_num%2==0:
+        return 1
     return 0
 
 samples = readDataFromFile("data.in")
-print(samples[0])
-print(samples[1])
-print(samples[2])
-print(samples[3])
-print(samples[4])
-print(samples[5])
-print(samples[6])
-print(samples[7])
-print(samples[8])
+# print(samples[0])
+# print(samples[1])
+# print(samples[2])
+# print(samples[3])
+# print(samples[4])
+# print(samples[5])
+# print(samples[6])
+# print(samples[7])
+print(samples[44])
 # counter = 1
 # for sample in samples:
 #     if not hasSqr(sample):
