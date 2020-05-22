@@ -67,6 +67,33 @@ def product(list1, list2):
             n2_index+=1
     return list3
 
+def separateOddEven(cycle_list):
+    odd_cycles = list()
+    even_cycles = list()
+    for cycle in cycle_list:
+        if len(cycle)%2==0:
+            even_cycles.append(cycle)
+        else:
+            odd_cycles.append(cycle)
+    return (even_cycles, odd_cycles)
+
+def oddCycleComposition(odd_cycles):
+    ans = list()
+    for cycle in odd_cycles:
+        n = len(cycle)
+        middle = n/2
+        first = list()
+        for i in range(middle+1):
+            first.append(cycle[i])
+        second = list()
+        count = n-middle-1
+        for r in range(count):
+            second.append(cycle[middle+1])
+            middle+=1
+        ans.append(product(first, second))
+    return ans
+
+
 samples = readDataFromFile("data.in")
 cycles = list()
 for sample in samples:
