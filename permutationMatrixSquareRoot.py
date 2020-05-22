@@ -81,7 +81,7 @@ def oddCycleComposition(odd_cycles):
     ans = list()
     for cycle in odd_cycles:
         n = len(cycle)
-        middle = n/2
+        middle = n//2
         first = list()
         for i in range(middle+1):
             first.append(cycle[i])
@@ -111,6 +111,58 @@ def evenCycleComposition(even_cycles):
             r+=1
         i = 0
     return ans
+
+def theMatrix(cycle_list):
+    odd_cycles, even_cycles = separateOddEven(cycle_list)
+    matrix = list()
+    if len(odd_cycles)!=0:
+        f_odd = oddCycleComposition(odd_cycles)
+    else:
+        f_odd = []
+    if len(even_cycles)!=0:
+        f_even = evenCycleComposition(even_cycles)
+    else:
+        f_even = []
+    
+    for i in f_odd:
+        matrix.append(i)
+    for i in f_even:
+        matrix.append(i)
+    return matrix
+
+def root(p, matrix):
+    root = list()
+    for x in p:
+        root.append(0)
+
+    for cycle in matrix:
+        cycle_len = len(cycle)
+        for i in range(cycle_len):
+            if i==cycle_len-1:
+                x = cycle[i]
+                root[i-1] = p[x]
+            else:
+                x = cycle[i]
+                y = cycle[i+1]
+                root[y] = p[x]
+    return root
+
+
+p = [1,0,3,2,5,4,7,6]
+p_temp = [1,0,3,2,5,4,7,6]
+cycles = decomposition(8,p_temp)
+print("pekh" + str(cycles))
+check = hasSqr(cycles)
+print("here" + str(check))
+if check:
+    print("okay")
+    matrix = theMatrix(cycles)
+    print("almost")
+    ans = root(p, matrix)
+    print("done")
+print(ans)
+
+
 
 # samples = readDataFromFile("data.in")
 # cycles = list()
