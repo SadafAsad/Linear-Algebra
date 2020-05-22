@@ -140,7 +140,8 @@ def root(p, matrix):
         for i in range(cycle_len):
             if i==cycle_len-1:
                 x = cycle[i]
-                root[i-1] = p[x]
+                y = cycle[0]
+                root[y] = p[x]
             else:
                 x = cycle[i]
                 y = cycle[i+1]
@@ -157,7 +158,7 @@ print("here" + str(check))
 if check:
     print("okay")
     matrix = theMatrix(cycles)
-    print("almost")
+    print("almost" + str(matrix))
     ans = root(p, matrix)
     print("done")
 print(ans)
