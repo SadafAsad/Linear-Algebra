@@ -93,13 +93,32 @@ def oddCycleComposition(odd_cycles):
         ans.append(product(first, second))
     return ans
 
+def evenCycleComposition(even_cycles):
+    ans = list()
+    n = len(even_cycles)
+    i = 0
+    while i<n:
+        cycle_len = len(even_cycles[i])
+        r = i+1
+        while r<n:
+            if len(even_cycles[r])==cycle_len:
+                new_cycle = product(even_cycles[i], even_cycles[r])
+                ans.append(new_cycle)
+                even_cycles.pop(r)
+                even_cycles.pop(i)
+                n = len(even_cycles)
+                break
+            r+=1
+        i+=1
+    return ans
 
-samples = readDataFromFile("data.in")
-cycles = list()
-for sample in samples:
-    cycles.append(decomposition(len(sample), sample))
-counter = 1
-for cycle in cycles:
-    if not hasSqr(cycle):
-        print("Sample " + str(counter) + " impossible")
-    counter+=1
+
+# samples = readDataFromFile("data.in")
+# cycles = list()
+# for sample in samples:
+#     cycles.append(decomposition(len(sample), sample))
+# counter = 1
+# for cycle in cycles:
+#     if not hasSqr(cycle):
+#         print("Sample " + str(counter) + " impossible")
+#     counter+=1
