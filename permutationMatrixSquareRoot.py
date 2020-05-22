@@ -1,14 +1,5 @@
 import itertools
 
-def zeroMatrix(n):
-    matrix = list()
-    for i in range(n):
-        row = list()
-        for j in range(n):
-            row.append(0)
-        matrix.append(row)
-    return matrix
-
 def decomposition(n, data_str):
     cycles_list = list()
     for r in range(n):
@@ -148,29 +139,19 @@ def root(p, matrix):
                 root[y] = p[x]
     return root
 
-
-p = [1,0,3,2,5,4,7,6]
-p_temp = [1,0,3,2,5,4,7,6]
-cycles = decomposition(8,p_temp)
-print("pekh" + str(cycles))
-check = hasSqr(cycles)
-print("here" + str(check))
-if check:
-    print("okay")
-    matrix = theMatrix(cycles)
-    print("almost" + str(matrix))
-    ans = root(p, matrix)
-    print("done")
-print(ans)
-
-
-
-# samples = readDataFromFile("data.in")
-# cycles = list()
-# for sample in samples:
-#     cycles.append(decomposition(len(sample), sample))
-# counter = 1
-# for cycle in cycles:
-#     if not hasSqr(cycle):
-#         print("Sample " + str(counter) + " impossible")
-#     counter+=1
+samples = readDataFromFile("data.in")
+samples_temp = readDataFromFile("data.in")
+cycles = list()
+for sample in samples_temp:
+    cycles.append(decomposition(len(sample), sample))
+n = len(cycles)
+for i in range(n):
+    if i==50:
+        break
+    if not hasSqr(cycles[i]):
+        print("Sample " + str(i+1) + " impossible")
+    else:
+        matrix = theMatrix(cycles[i])
+        root_ans = root(samples[i], matrix)
+        print("Sample "+ str(i+1) + " A=" + str(root_ans))
+    i+=1
