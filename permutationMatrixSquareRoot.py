@@ -51,7 +51,26 @@ def hasSqr(cycle_list):
             return 0
     return 1
 
+def product(list1, list2):
+    n1 = len(list1)
+    n2 = len(list2)
+    n1_index = 0
+    n2_index = 0
+    list3 = list()
+    for i in range(n1+n2):
+        if i%2==0:
+            list3.append(list1[n1_index])
+            n1_index+=1
+        else:
+            list3.append(list2[n2_index])
+            n2_index+=1
+    return list3
+
 samples = readDataFromFile("data.in")
+print(samples[0])
+print(samples[1])
+print(samples[2])
+print(samples[3])
 counter = 1
 for sample in samples:
     if not hasSqr(sample):
