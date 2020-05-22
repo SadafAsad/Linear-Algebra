@@ -109,9 +109,8 @@ def evenCycleComposition(even_cycles):
                 n = len(even_cycles)
                 break
             r+=1
-        i+=1
+        i = 0
     return ans
-
 
 # samples = readDataFromFile("data.in")
 # cycles = list()
