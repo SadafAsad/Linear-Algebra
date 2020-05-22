@@ -12,6 +12,7 @@ def readDataFromFile(file_name):
         samples.append(sample)
     return samples
 
+# returns disjoint cycles if matrix p
 def decompositionToDisjointCycles(n, data_str):
     cycles_list = list()
     for r in range(n):
@@ -28,6 +29,7 @@ def decompositionToDisjointCycles(n, data_str):
             cycles_list.append(cycle)
     return cycles_list
 
+# number of even cycles of the same length most be even (%2==0) 
 def hasSquareRoot(cycle_list):
     n = len(cycle_list)
     for i in range(n):
@@ -41,6 +43,10 @@ def hasSquareRoot(cycle_list):
             return 0
     return 1
 
+# even  : list1, list2 cycle of the same even length
+# odd   : list1, list2 both are the same odd cycle
+# even  : (a1,a2)(a3,a4) --> (a1,a3,a2,a4)
+# odd   : (a1,a2,a3,a4,a5) --> (a1,a4,a2,a5,a3) 
 def cycleSquareRoot(list1, list2):
     n1 = len(list1)
     n2 = len(list2)
@@ -56,6 +62,7 @@ def cycleSquareRoot(list1, list2):
             n2_index+=1
     return list3
 
+# returns a tuple of even cycles list and odd cycles list
 def separateOddEvenCycle(cycle_list):
     odd_cycles = list()
     even_cycles = list()
@@ -66,6 +73,7 @@ def separateOddEvenCycle(cycle_list):
             odd_cycles.append(cycle)
     return (even_cycles, odd_cycles)
 
+# returns square roots of odd cycles
 def oddCycleSquareRoot(odd_cycles):
     ans = list()
     for cycle in odd_cycles:
@@ -82,6 +90,7 @@ def oddCycleSquareRoot(odd_cycles):
         ans.append(cycleSquareRoot(first, second))
     return ans
 
+# returns square roots of even cycles of the same length
 def evenCycleSquareRoot(even_cycles):
     ans = list()
     n = len(even_cycles)
@@ -101,7 +110,8 @@ def evenCycleSquareRoot(even_cycles):
         i = 0
     return ans
 
-def theMatrix(cycle_list):
+# odd squares and even squares
+def cyclesRoots(cycle_list):
     even_cycles, odd_cycles = separateOddEvenCycle(cycle_list)
     matrix = list()
     if len(odd_cycles)!=0:
@@ -119,12 +129,12 @@ def theMatrix(cycle_list):
         matrix.append(i)
     return matrix
 
-def root(p, matrix):
+def root(p, cycles_root):
     root = list()
     for x in p:
         root.append(0)
 
-    for cycle in matrix:
+    for cycle in cycles_root:
         cycle_len = len(cycle)
         for i in range(cycle_len):
             if i==cycle_len-1:
@@ -138,11 +148,16 @@ def root(p, matrix):
     return root
 
 def permutationSquareRoot(file_name):
+    # reading p matrices
     samples = readDataFromFile(file_name)
     samples_temp = readDataFromFile(file_name)
+
+    # finding their disjoint cycles
     cycles = list()
     for sample in samples_temp:
         cycles.append(decompositionToDisjointCycles(len(sample), sample))
+    
+    # checking if they have square roots
     n = len(cycles)
     for i in range(n):
         if i==15:
@@ -150,8 +165,9 @@ def permutationSquareRoot(file_name):
         if not hasSquareRoot(cycles[i]):
             print("Sample " + str(i+1) + " impossible")
         else:
-            matrix = theMatrix(cycles[i])
-            root_ans = root(samples[i], matrix)
+            # finding their root
+            cycles_roots = cyclesRoots(cycles[i])
+            root_ans = root(samples[i], cycles_roots)
             print("Sample "+ str(i+1) + " A=" + str(root_ans))
         i+=1
 
