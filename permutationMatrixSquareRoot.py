@@ -32,10 +32,11 @@ def readDataFromFile(file_name):
     samples = list()
     for i in range(sample_counter):
         index = (2*(i+1))-1
-        n = int(file_lines[index])
         one_s = file_lines[index+1].split()
-        cycle_list = decomposition(n, one_s)
-        samples.append(cycle_list)
+        sample = list()
+        for i in one_s:
+            sample.append(int(i))
+        samples.append(sample)
     return samples
 
 def hasSqr(cycle_list):
@@ -67,12 +68,11 @@ def product(list1, list2):
     return list3
 
 samples = readDataFromFile("data.in")
-print(samples[0])
-print(samples[1])
-print(samples[2])
-print(samples[3])
-counter = 1
+cycles = list()
 for sample in samples:
-    if not hasSqr(sample):
+    cycles.append(decomposition(len(sample), sample))
+counter = 1
+for cycle in cycles:
+    if not hasSqr(cycle):
         print("Sample " + str(counter) + " impossible")
     counter+=1
