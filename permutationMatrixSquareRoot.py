@@ -113,7 +113,7 @@ def evenCycleComposition(even_cycles):
     return ans
 
 def theMatrix(cycle_list):
-    odd_cycles, even_cycles = separateOddEven(cycle_list)
+    even_cycles, odd_cycles = separateOddEven(cycle_list)
     matrix = list()
     if len(odd_cycles)!=0:
         f_odd = oddCycleComposition(odd_cycles)
