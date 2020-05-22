@@ -1,6 +1,18 @@
-import itertools
+def readDataFromFile(file_name):
+    file = open(file_name, "r")
+    file_lines = file.readlines()
+    sample_counter = int(file_lines[0])
+    samples = list()
+    for i in range(sample_counter):
+        index = (2*(i+1))-1
+        one_s = file_lines[index+1].split()
+        sample = list()
+        for i in one_s:
+            sample.append(int(i))
+        samples.append(sample)
+    return samples
 
-def decomposition(n, data_str):
+def decompositionToDisjointCycles(n, data_str):
     cycles_list = list()
     for r in range(n):
         cycle = list()
@@ -16,21 +28,7 @@ def decomposition(n, data_str):
             cycles_list.append(cycle)
     return cycles_list
 
-def readDataFromFile(file_name):
-    file = open(file_name, "r")
-    file_lines = file.readlines()
-    sample_counter = int(file_lines[0])
-    samples = list()
-    for i in range(sample_counter):
-        index = (2*(i+1))-1
-        one_s = file_lines[index+1].split()
-        sample = list()
-        for i in one_s:
-            sample.append(int(i))
-        samples.append(sample)
-    return samples
-
-def hasSqr(cycle_list):
+def hasSquareRoot(cycle_list):
     n = len(cycle_list)
     for i in range(n):
         x = len(cycle_list[i])
@@ -43,7 +41,7 @@ def hasSqr(cycle_list):
             return 0
     return 1
 
-def product(list1, list2):
+def cycleSquareRoot(list1, list2):
     n1 = len(list1)
     n2 = len(list2)
     n1_index = 0
@@ -58,7 +56,7 @@ def product(list1, list2):
             n2_index+=1
     return list3
 
-def separateOddEven(cycle_list):
+def separateOddEvenCycle(cycle_list):
     odd_cycles = list()
     even_cycles = list()
     for cycle in cycle_list:
@@ -68,7 +66,7 @@ def separateOddEven(cycle_list):
             odd_cycles.append(cycle)
     return (even_cycles, odd_cycles)
 
-def oddCycleComposition(odd_cycles):
+def oddCycleSquareRoot(odd_cycles):
     ans = list()
     for cycle in odd_cycles:
         n = len(cycle)
@@ -81,10 +79,10 @@ def oddCycleComposition(odd_cycles):
         for r in range(count):
             second.append(cycle[middle+1])
             middle+=1
-        ans.append(product(first, second))
+        ans.append(cycleSquareRoot(first, second))
     return ans
 
-def evenCycleComposition(even_cycles):
+def evenCycleSquareRoot(even_cycles):
     ans = list()
     n = len(even_cycles)
     i = 0
@@ -93,7 +91,7 @@ def evenCycleComposition(even_cycles):
         r = i+1
         while r<n:
             if len(even_cycles[r])==cycle_len:
-                new_cycle = product(even_cycles[i], even_cycles[r])
+                new_cycle = cycleSquareRoot(even_cycles[i], even_cycles[r])
                 ans.append(new_cycle)
                 even_cycles.pop(r)
                 even_cycles.pop(i)
@@ -104,14 +102,14 @@ def evenCycleComposition(even_cycles):
     return ans
 
 def theMatrix(cycle_list):
-    even_cycles, odd_cycles = separateOddEven(cycle_list)
+    even_cycles, odd_cycles = separateOddEvenCycle(cycle_list)
     matrix = list()
     if len(odd_cycles)!=0:
-        f_odd = oddCycleComposition(odd_cycles)
+        f_odd = oddCycleSquareRoot(odd_cycles)
     else:
         f_odd = []
     if len(even_cycles)!=0:
-        f_even = evenCycleComposition(even_cycles)
+        f_even = evenCycleSquareRoot(even_cycles)
     else:
         f_even = []
     
@@ -139,19 +137,22 @@ def root(p, matrix):
                 root[y] = p[x]
     return root
 
-samples = readDataFromFile("data.in")
-samples_temp = readDataFromFile("data.in")
-cycles = list()
-for sample in samples_temp:
-    cycles.append(decomposition(len(sample), sample))
-n = len(cycles)
-for i in range(n):
-    if i==50:
-        break
-    if not hasSqr(cycles[i]):
-        print("Sample " + str(i+1) + " impossible")
-    else:
-        matrix = theMatrix(cycles[i])
-        root_ans = root(samples[i], matrix)
-        print("Sample "+ str(i+1) + " A=" + str(root_ans))
-    i+=1
+def permutationSquareRoot(file_name):
+    samples = readDataFromFile(file_name)
+    samples_temp = readDataFromFile(file_name)
+    cycles = list()
+    for sample in samples_temp:
+        cycles.append(decompositionToDisjointCycles(len(sample), sample))
+    n = len(cycles)
+    for i in range(n):
+        if i==15:
+            break
+        if not hasSquareRoot(cycles[i]):
+            print("Sample " + str(i+1) + " impossible")
+        else:
+            matrix = theMatrix(cycles[i])
+            root_ans = root(samples[i], matrix)
+            print("Sample "+ str(i+1) + " A=" + str(root_ans))
+        i+=1
+
+permutationSquareRoot("data.in")
