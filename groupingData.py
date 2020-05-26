@@ -6,6 +6,7 @@ def readDataFile(file_name):
         csv_reader = reader(read_obj)
         for row in csv_reader:
             points.append(row)
+    return points
 
 
 
