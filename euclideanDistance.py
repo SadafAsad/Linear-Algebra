@@ -12,10 +12,10 @@ def readDataFile(file_name):
 def euclideanDistance(point, points):
     distances = list()
     for each_point in points:
-        x2 = ( int(point[0])-int(each_point[0]) )**2
-        y2 = ( int(point[1])-int(each_point[1]) )**2
-        z2 = ( int(point[2])-int(each_point[2]) )**2
-        k2 = ( int(point[3])-int(each_point[3]) )**2
+        x2 = ( float(point[0])-float(each_point[0]) )**2
+        y2 = ( float(point[1])-float(each_point[1]) )**2
+        z2 = ( float(point[2])-float(each_point[2]) )**2
+        k2 = ( float(point[3])-float(each_point[3]) )**2
         distance = math.sqrt( x2+y2+z2+k2 )
         distances.append(distance)
     return distances
@@ -43,8 +43,8 @@ while(True):
     center_avg1 = 0
     center_avg2 = 0
     for i in range(p_num):
-        c1_abs = abs(d-center1_euclidean_distances[i])
-        c2_abs = abs(d-center2_euclidean_distances[i])
+        c1_abs = abs(d[0]-center1_euclidean_distances[i])
+        c2_abs = abs(d[0]-center2_euclidean_distances[i])
         if c1_abs<=c2_abs:
             cluster1.append(points[i])
             center_avg2+=center1_euclidean_distances[i]
