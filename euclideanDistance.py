@@ -1,4 +1,5 @@
 from csv import reader
+import math
 
 def readDataFile(file_name):
     points = list()
