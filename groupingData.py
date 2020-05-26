@@ -20,5 +20,12 @@ def euclideanDistance(point, points):
         distances.append(distance)
     return distances
 
+def norm(point):
+    x2 = int(point[0])**2
+    y2 = int(point[1])**2
+    z2 = int(point[2])**2
+    k2 = int(point[3])**2
+    return math.sqrt( x2+y2+z2+k2 )
+
 
 points = readDataFile('dataset.csv')
