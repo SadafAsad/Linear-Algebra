@@ -1,4 +1,5 @@
 from csv import reader
+import math
 
 def readDataFile(file_name):
     points = list()
@@ -8,7 +9,16 @@ def readDataFile(file_name):
             points.append(row)
     return points
 
-
+def euclideanDistance(point, points):
+    distances = list()
+    for each_point in points:
+        x2 = ( int(point[0])-int(each_point[0]) )**2
+        y2 = ( int(point[1])-int(each_point[1]) )**2
+        z2 = ( int(point[2])-int(each_point[2]) )**2
+        k2 = ( int(point[3])-int(each_point[3]) )**2
+        distance = math.sqrt( x2+y2+z2+k2 )
+        distances.append(distance)
+    return distances
 
 
 points = readDataFile('dataset.csv')
