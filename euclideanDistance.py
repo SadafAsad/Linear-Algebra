@@ -25,12 +25,11 @@ p_num = len(points)
 center1 = points[0]
 center2 = points[1]
 
-cluster1 = list()
-cluster2 = list()
-
 while(True):
     center1_euclidean_distances = euclideanDistance(center1, points)
     center2_euclidean_distances = euclideanDistance(center2, points)
+    cluster1 = list()
+    cluster2 = list()
     center_avg1 = [0,0,0,0]
     center_avg2 = [0,0,0,0]
     for i in range(p_num):
@@ -60,4 +59,5 @@ while(True):
     center1 = center_avg1
     center2 = center_avg2
 
-print("done")
+print(len(cluster1))
+print(len(cluster2))
