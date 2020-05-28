@@ -42,16 +42,17 @@ def separating(d, points):
         points.pop(0)
     return (group1, group2)
 
-def maxDistance(points):
-    p_len = len(points)
-    for i in range(p_len//2):
-        distances_from_i = euclideanDistance(points[i], points)
-        max_d = 0
-        for d in distances_from_i:
-            if d>=max_d:
-                max_d = d
-    return d
-
+def d(group1, group2):
+    flag = 0
+    for p in group1:
+        distances_from_p = euclideanDistance(p, group2)
+        if flag:
+            local_min = min(distances_from_p)
+            if local_min<=global_min:
+                global_min = local_min
+        else:
+            global_min = min(distances_from_p)
+            flag = 1
 
 # points = readDataFile('dataset.csv')
 # p_num = len(points)
