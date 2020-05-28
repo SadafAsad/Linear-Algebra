@@ -1,11 +1,11 @@
-from csv import reader
+import csv
 import math
 import random
 
 def readDataFile(file_name):
     points = list()
     with open(file_name, 'r') as read_obj:
-        csv_reader = reader(read_obj)
+        csv_reader = csv.reader(read_obj)
         for row in csv_reader:
             points.append(row)
     return points
@@ -67,8 +67,7 @@ def kMeans(points):
 
     return (cluster1, cluster2)
 
-
-def d(cluster1, cluster2):
+def calculateD(cluster1, cluster2):
     flag = 0
     for p in cluster1:
         distances_from_p = euclideanDistance(p, cluster2)
@@ -81,27 +80,38 @@ def d(cluster1, cluster2):
             flag = 1
     return global_min
 
-def separating(d, points):
-    group1 = list()
-    group2 = list()
-    while len(points)!=0:
-        point = points[0]
-        distances = euclideanDistance(point, points)
-        i = len(points)-1
-        flag = 0
-        while i>0:
-            if distances[i]<=d:
-                flag = 1
-                group1.append(points[i])
-                points.pop(i)
-            i-=1
-        if flag:
-            group1.append(points[0])
-        else:
-            group2.append(points[0])
-        points.pop(0)
-    return (group1, group2)
+# def separating(d, points):
+#     group1 = list()
+#     group2 = list()
+#     while len(points)!=0:
+#         point = points[0]
+#         distances = euclideanDistance(point, points)
+#         i = len(points)-1
+#         flag = 0
+#         while i>0:
+#             if distances[i]<=d:
+#                 flag = 1
+#                 group1.append(points[i])
+#                 points.pop(i)
+#             i-=1
+#         if flag:
+#             group1.append(points[0])
+#         else:
+#             group2.append(points[0])
+#         points.pop(0)
+#     return (group1, group2)
 
-points = readDataFile('database.csv')
-cluster1, cluster2 = kMeans(points)
-print(d(cluster1, cluster2))
+
+# points = readDataFile('dataset.csv')
+# cluster1, cluster2 = kMeans(points)
+# print(len(cluster1))
+# # print(cluster1)
+# # print(cluster2)
+# d = calculateD(cluster1, cluster2)
+# # print(d)
+
+# with open('result.csv', 'w',newline='') as write_file:
+#     csv_writer = csv.writer( write_file )
+#     for c in cluster1:
+#         csv_writer.writerow(c)
+    
