@@ -20,12 +20,6 @@ def euclideanDistance(point, points):
         distances.append(distance)
     return distances
 
-def tmpCluster(cluster):
-    tmp_cluster = list()
-    for c in cluster:
-        tmp_cluster.append(c)
-    return tmp_cluster
-
 points = readDataFile('dataset.csv')
 p_num = len(points)
 center1 = points[0]
@@ -34,34 +28,36 @@ center2 = points[1]
 cluster1 = list()
 cluster2 = list()
 
-bag = [[0],[0],[0],[0]]
-
 while(True):
     center1_euclidean_distances = euclideanDistance(center1, points)
     center2_euclidean_distances = euclideanDistance(center2, points)
-    center_avg1 = 0
-    center_avg2 = 0
+    center_avg1 = [0,0,0,0]
+    center_avg2 = [0,0,0,0]
     for i in range(p_num):
         if center1_euclidean_distances[i]<=center2_euclidean_distances[i]:
             cluster1.append(points[i])
-            center_avg1+=float(points[i])
-            center_avg1/=2
+            center_avg1[0]+=float(points[i][0])
+            center_avg1[1]+=float(points[i][1])
+            center_avg1[2]+=float(points[i][2])
+            center_avg1[3]+=float(points[i][3])
+            center_avg1[0]/=2
+            center_avg1[1]/=2
+            center_avg1[2]/=2
+            center_avg1[3]/=2
         else:
             cluster2.append(points[i])
-            center_avg2+=float(points[i])
-            center_avg2/=2
+            center_avg2[0]+=float(points[i][0])
+            center_avg2[1]+=float(points[i][1])
+            center_avg2[2]+=float(points[i][2])
+            center_avg2[3]+=float(points[i][3])
+            center_avg2[0]/=2
+            center_avg2[1]/=2
+            center_avg2[2]/=2
+            center_avg2[3]/=2
 
-    cluster1_len = len(cluster1)
-    center1 = cluster1[cluster1_len//2]
-    cluster2_len = len(cluster2)
-    center2 = cluster2[cluster2_len//2]
-
-    # 0 va 1 jadid ha
-    bag[0] = cluster1
-    bag[1] = cluster2
-    if bag[0]==bag[2] and bag[1]==bag[3]:
+    if center1==center_avg1 and center2==center_avg2:
         break
-    bag[2] = tmpCluster(cluster1)
-    bag[3] = tmpCluster(cluster2)
+    center1 = center_avg1
+    center2 = center_avg2
 
-print(d)
+print("done")
