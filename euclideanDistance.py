@@ -10,13 +10,6 @@ def readDataFile(file_name):
             points.append(row)
     return points
 
-def findStartDistance(points):
-    distances = list()
-    for point in points:
-        d = math.sqrt(float(point[0])**2+float(point[1])**2+float(point[2])**2+float(point[3])**2)
-        distances.append(d)
-    return distances
-
 def euclideanDistance(point, points):
     distances = list()
     for each_point in points:
@@ -26,6 +19,13 @@ def euclideanDistance(point, points):
         k2 = ( float(point[3])-float(each_point[3]) )**2
         distance = math.sqrt( x2+y2+z2+k2 )
         distances.append(distance)
+    return distances
+
+def findStartDistance(points):
+    distances = list()
+    for point in points:
+        d = math.sqrt(float(point[0])**2+float(point[1])**2+float(point[2])**2+float(point[3])**2)
+        distances.append(d)
     return distances
 
 def tmpCluster(cluster):
@@ -110,21 +110,29 @@ def calculateD(cluster1, cluster2):
             flag = 1
     return global_min
 
+def conditionA(file_name):
+    points = readDataFile(file_name)
+    cluster1, cluster2 = kMeans(points)
+    d = calculateD(cluster1, cluster2)
+
+    file = open("conditionA.txt", "w")
+    for p in points:
+        if p in cluster1:
+            file.write('0'+'\n')
+        else:
+            file.write('1'+'\n')
+    file.write(str(d))
+    file.close()
+
+    # with open('result1.csv', 'w',newline='') as write_file:
+    #     csv_writer = csv.writer( write_file )
+    #     for c in cluster1:
+    #         csv_writer.writerow(c)
+
+    # with open('result2.csv', 'w',newline='') as write_file:
+    #     csv_writer = csv.writer( write_file )
+    #     for c in cluster2:
+    #         csv_writer.writerow(c)   
 
 
-points = readDataFile('dataset.csv')
-cluster1, cluster2 = kMeans(points)
-print(len(cluster1))
-print(len(cluster2))
-d = calculateD(cluster1, cluster2)
-print(d)
-
-with open('result1.csv', 'w',newline='') as write_file:
-    csv_writer = csv.writer( write_file )
-    for c in cluster1:
-        csv_writer.writerow(c)
-
-with open('result2.csv', 'w',newline='') as write_file:
-    csv_writer = csv.writer( write_file )
-    for c in cluster2:
-        csv_writer.writerow(c)   
+conditionA('dataset.csv')
