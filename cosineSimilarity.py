@@ -1,5 +1,5 @@
-import math
 import csv
+import math
 import random
 
 def readDataFile(file_name):
@@ -159,17 +159,6 @@ def conditionB(file_name):
             file.write('1'+'\n')
     file.write(str(s))
     file.close()
-
-
-# with open('result3.csv', 'w',newline='') as write_file:
-#     csv_writer = csv.writer( write_file )
-#     for c in cluster1:
-#         csv_writer.writerow(c)
-
-# with open('result4.csv', 'w',newline='') as write_file:
-#     csv_writer = csv.writer( write_file )
-#     for c in cluster2:
-#         csv_writer.writerow(c)   
 
 
 conditionB('dataset.csv')

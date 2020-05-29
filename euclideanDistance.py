@@ -142,16 +142,6 @@ def conditionA(file_name):
     file.write(str(d))
     file.close()
 
-    # with open('result1.csv', 'w',newline='') as write_file:
-    #     csv_writer = csv.writer( write_file )
-    #     for c in cluster1:
-    #         csv_writer.writerow(c)
-
-    # with open('result2.csv', 'w',newline='') as write_file:
-    #     csv_writer = csv.writer( write_file )
-    #     for c in cluster2:
-    #         csv_writer.writerow(c)   
-
 
 conditionA('dataset.csv')
 
