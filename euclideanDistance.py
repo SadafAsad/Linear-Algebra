@@ -10,6 +10,7 @@ def readDataFile(file_name):
             points.append(row)
     return points
 
+# sqr( (x1-x2)**2 + (y1-y2)**2 + (z1-z2)**2 + (k1-k2)**2 )
 def euclideanDistance(point, points):
     distances = list()
     for each_point in points:
@@ -21,6 +22,7 @@ def euclideanDistance(point, points):
         distances.append(distance)
     return distances
 
+# sqr( x**2 + y**2 + z**2 + k**2 )
 def findStartDistance(points):
     distances = list()
     for point in points:
@@ -37,19 +39,24 @@ def tmpCluster(cluster):
 def kMeans(points):
     p_num = len(points)
 
+    # finding points' distances from start
     start_d = findStartDistance(points)
+    # looking for the farthest point
     max_d = 0
     i_max = 0
     for i in range(p_num):
         if start_d[i]>=max_d:
             max_d = start_d[i]
             i_max = i
+    # looking for the neartest point
     min_d = start_d[0]
     i_min = 0
     for i in range(p_num):
         if start_d[i]<=min_d:
             min_d = start_d[i]
             i_min = i
+    # initializing first centeres
+    # nearest and farthest points from start
     center1 = points[i_min]
     center2 = points[i_max]
 
@@ -57,9 +64,11 @@ def kMeans(points):
     cluster2 = list()
 
     while(True):
+        # saving last clusters
         tmp_cluster1 = tmpCluster(cluster1)
         tmp_cluster2 = tmpCluster(cluster2)
 
+        # euclidean distances from center1 and center2
         center1_euclidean_distances = euclideanDistance(center1, points)
         center2_euclidean_distances = euclideanDistance(center2, points)
 
@@ -68,6 +77,9 @@ def kMeans(points):
         center_avg1 = [0,0,0,0]
         center_avg2 = [0,0,0,0]
 
+        # checks each point's distances from center1 and center2
+        # and each point belongs to the cluster closest to
+        # at the same time calculates average of points of each cluster
         for i in range(p_num):
             if center1_euclidean_distances[i]<=center2_euclidean_distances[i]:
                 cluster1.append(points[i])
@@ -90,13 +102,17 @@ def kMeans(points):
                 center_avg2[2]/=2
                 center_avg2[3]/=2
 
+        # if the new clusters are the same as the old ones then our clusters are well separated
         if cluster1==tmp_cluster1 and cluster2==tmp_cluster2:
             break
+        # if not centers are the calculated averages
         center1 = center_avg1
         center2 = center_avg2
 
     return (cluster1, cluster2)
 
+# distances of each points of cluster1 from points of cluster2 are calculated
+# and the minimum of these distances is d 
 def calculateD(cluster1, cluster2):
     flag = 0
     for p in cluster1:
@@ -115,6 +131,8 @@ def conditionA(file_name):
     cluster1, cluster2 = kMeans(points)
     d = calculateD(cluster1, cluster2)
 
+    # if it's in cluster1 --> 0
+    # if it's in cluster2 --> 1
     file = open("conditionA.txt", "w")
     for p in points:
         if p in cluster1:
@@ -136,3 +154,4 @@ def conditionA(file_name):
 
 
 conditionA('dataset.csv')
+
