@@ -130,7 +130,7 @@ def kMeans(points):
 
 # each points of cluster1 similarities with points of cluster2 are calculated
 # and the maximum is s
-# maximum cosinus means more similar
+# maximum cosinus means more similar/close
 def calculateS(cluster1, cluster2):
     flag = 0
     for p in cluster1:
