@@ -122,21 +122,31 @@ def calculateS(cluster1, cluster2):
             flag = 1
     return global_min
 
+def conditionB(file_name):
+    points = readDataFile(file_name)
+    cluster1, cluster2 = kMeans(points)
+    s = calculateS(cluster1, cluster2)
+
+    file = open("conditionB.txt", "w")
+    for p in points:
+        if p in cluster1:
+            file.write('0'+'\n')
+        else:
+            file.write('1'+'\n')
+    file.write(str(s))
+    file.close()
 
 
-points = readDataFile('dataset.csv')
-cluster1, cluster2 = kMeans(points)
-print(len(cluster1))
-print(len(cluster2))
-s = calculateS(cluster1, cluster2)
-print(s)
+# with open('result3.csv', 'w',newline='') as write_file:
+#     csv_writer = csv.writer( write_file )
+#     for c in cluster1:
+#         csv_writer.writerow(c)
 
-with open('result3.csv', 'w',newline='') as write_file:
-    csv_writer = csv.writer( write_file )
-    for c in cluster1:
-        csv_writer.writerow(c)
+# with open('result4.csv', 'w',newline='') as write_file:
+#     csv_writer = csv.writer( write_file )
+#     for c in cluster2:
+#         csv_writer.writerow(c)   
 
-with open('result4.csv', 'w',newline='') as write_file:
-    csv_writer = csv.writer( write_file )
-    for c in cluster2:
-        csv_writer.writerow(c)   
+
+conditionB('dataset.csv')
+
