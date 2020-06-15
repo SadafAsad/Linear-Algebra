@@ -97,8 +97,8 @@ def QMatrix(a):
         k = a_index
         a_n = a[a_index]
         u = a_n
-        while k!=1:
-            u = u-( columnMultiply( e_matrix[e_index] , columnDotProduct(a_n,e_matrix[e_index]) ) )
+        while k!=0:
+            u = columnMinus( u , columnMultiply( e_matrix[e_index] , columnDotProduct(a_n,e_matrix[e_index]) ) )
             e_index+=1
             k-=1
         
@@ -107,4 +107,4 @@ def QMatrix(a):
     
     return e_matrix
         
-
+print(QMatrix([[1,1,0],[1,0,1],[0,1,1]]))
