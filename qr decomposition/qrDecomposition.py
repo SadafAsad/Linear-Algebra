@@ -66,3 +66,9 @@ def columnDotProduct(cl1, cl2):
     for i in range(count):
         ans = ans+(cl1[i]*cl2[i])
     return ans
+
+def columnMultiply(cl1, scalar):
+    cl1_multiplied = list()
+    for i in cl1:
+        cl1_multiplied.append(i*scalar)
+    return cl1_multiplied
