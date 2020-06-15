@@ -1,3 +1,5 @@
+import math
+
 def readDataFromFile(file_name):
     file = open(file_name, "r")
     file_lines = file.readlines()
@@ -51,3 +53,9 @@ def readDataFromFile(file_name):
         index = index+2
 
     return samples
+
+def column_norm(cl):
+    summ = 0
+    for i in cl:
+        summ = summ + (i*2)
+    return math.sqrt(summ)
