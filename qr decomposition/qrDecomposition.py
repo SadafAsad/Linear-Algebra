@@ -8,7 +8,8 @@ def readDataFromFile(file_name):
     n = int(file_lines[1])
     m = int(file_lines[2])
     index = 3
-    for i in range(sample_counter):
+    i_sample = 0
+    while(True):
         sample = list()
 
         # initializing a
@@ -20,10 +21,12 @@ def readDataFromFile(file_name):
 
         # filling a
         j_index = 0
-        for index in range(n*m):
+        element_counter = 0
+        for element_counter in range(n*m):
             if j_index==m:
                 j_index = 0
-            a[j_index].append(int(file_lines[index]))
+            a[j_index].append(float(file_lines[index]))
+            index+=1
             j_index+=1
         sample.append(a)
 
@@ -31,16 +34,20 @@ def readDataFromFile(file_name):
         y = list()
         i_index = 0
         for i_index in range(n):
-            y.append(int(file_lines([index])))
+            y.append(float(file_lines[index]))
             index+=1
         sample.append(y)
 
         # adding first sample :[a,y]
         samples.append(sample)
+        i_sample+=1
+
+        # end of file
+        if i_sample==sample_counter:
+            break
 
         n = int(file_lines[index])
         m = int(file_lines[index+1])
         index = index+2
 
     return samples
-
