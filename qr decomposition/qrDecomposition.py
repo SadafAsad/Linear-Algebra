@@ -54,7 +54,7 @@ def readDataFromFile(file_name):
 
     return samples
 
-def column_norm(cl):
+def columnNorm(cl):
     summ = 0
     for i in cl:
         summ = summ + (i*2)
