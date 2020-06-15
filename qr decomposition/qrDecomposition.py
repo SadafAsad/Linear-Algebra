@@ -86,3 +86,25 @@ def calculateU(cl, e):
 def calculateE(u):
     return columnMultiply(u, 1/columnNorm(u))
 
+def QMatrix(a):
+    a_len = len(a)
+    a_index = 0
+    
+    e_matrix = list()
+    for a_index in range(a_len):
+        # u_n calculating
+        e_index = 0
+        k = a_index
+        a_n = a[a_index]
+        u = a_n
+        while k!=1:
+            u = u-( columnMultiply( e_matrix[e_index] , columnDotProduct(a_n,e_matrix[e_index]) ) )
+            e_index+=1
+            k-=1
+        
+        # e_n filling
+        e_matrix.append(calculateE(u))
+    
+    return e_matrix
+        
+
