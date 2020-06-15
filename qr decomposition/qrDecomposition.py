@@ -80,8 +80,8 @@ def columnMinus(cl1, cl2):
         cl3.append(cl1[i]-cl2[i])
     return cl3
 
-def calculateU():
-    pass
+def calculateE(u):
+    return columnMultiply(u, 1/columnNorm(u))
 
-def calculateE():
+def calculateU():
     pass
