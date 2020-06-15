@@ -80,3 +80,8 @@ def columnMinus(cl1, cl2):
         cl3.append(cl1[i]-cl2[i])
     return cl3
 
+def calculateU():
+    pass
+
+def calculateE():
+    pass
