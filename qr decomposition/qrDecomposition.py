@@ -59,3 +59,10 @@ def columnNorm(cl):
     for i in cl:
         summ = summ + (i*2)
     return math.sqrt(summ)
+
+def dotProduct(cl1, cl2):
+    ans = 0
+    count = len(cl1)
+    for i in range(count):
+        ans = ans+(cl1[i]*cl2[i])
+    return ans
