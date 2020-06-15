@@ -72,3 +72,11 @@ def columnMultiply(cl1, scalar):
     for i in cl1:
         cl1_multiplied.append(i*scalar)
     return cl1_multiplied
+
+def columnMinus(cl1, cl2):
+    cl3 = list()
+    count = len(cl1)
+    for i in range(count):
+        cl3.append(cl1[i]-cl2[i])
+    return cl3
+
