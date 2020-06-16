@@ -121,10 +121,11 @@ def RMatrix(a, e):
     cycle = 0
     for i in range(a_len):
         while count!=a_len:
-            r[i][count] = columnDotProduct(a[count], e[count])
+            r[i][count] = columnDotProduct(a[count], e[i])
             count+=1
         cycle+=1
         count = cycle
 
     return r
-    
+
+print(RMatrix([[1,1,0], [1,0,1], [0,1,1]], QMatrix([[1,1,0], [1,0,1], [0,1,1]])))
