@@ -36,7 +36,7 @@ def readDataFromFile(file_name):
         y = list()
         i_index = 0
         for i_index in range(n):
-            y.append(float(file_lines[index]))
+            y.append([float(file_lines[index])])
             index+=1
         sample.append(y)
 
