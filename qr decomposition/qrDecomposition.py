@@ -128,3 +128,11 @@ def RMatrix(a, e):
 
     return r
 
+def QInverse(q):
+    pass
+
+def matrixMultiply(qi, y):
+    pass
+
+def XMatrix(r, co):
+    pass
