@@ -193,5 +193,6 @@ def linearEquationSolver(file_name):
 
         answers.append(x)
     
-    
+    writeX(answers)
 
+linearEquationSolver("in.txt")
