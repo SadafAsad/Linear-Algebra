@@ -132,7 +132,19 @@ def QInverse(q):
     pass
 
 def matrixMultiply(qi, y):
-    pass
+    ans = list()
+    qi_rows_number = len(qi)
+    qi_columns_number = len(qi[0])
+    y_columns_number = len(y[0])
+    for i in range(qi_rows_number):
+        row_mult = list()
+        for k in range(y_columns_number):
+            sum = 0
+            for j in range(qi_columns_number):
+                sum+=qi[i][j]*y[j][k]
+            row_mult.append(sum)
+        ans.append(row_mult)
+    return ans
 
 def XMatrix(r, co):
     pass
