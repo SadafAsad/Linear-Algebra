@@ -168,7 +168,7 @@ def XMatrix(r, co):
 
     return x
 
-def printX(answers):
+def writeX(answers):
     file = open("answers.txt", "w")
     for ans in answers:
         if len(ans)==0:
@@ -193,5 +193,5 @@ def linearEquationSolver(file_name):
 
         answers.append(x)
     
-
+    
 
