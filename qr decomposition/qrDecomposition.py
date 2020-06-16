@@ -107,4 +107,3 @@ def QMatrix(a):
     
     return e_matrix
         
-print(QMatrix([[1,1,0],[1,0,1],[0,1,1]]))
