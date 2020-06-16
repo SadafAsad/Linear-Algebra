@@ -128,4 +128,3 @@ def RMatrix(a, e):
 
     return r
 
-print(RMatrix([[1,1,0], [1,0,1], [0,1,1]], QMatrix([[1,1,0], [1,0,1], [0,1,1]])))
