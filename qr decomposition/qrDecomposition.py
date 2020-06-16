@@ -168,5 +168,10 @@ def XMatrix(r, co):
 
     return x
 
-
+def printX(x):
+    if len(x)==0:
+        print("N")
+    else:
+        for i in x:
+            print(i)
         
