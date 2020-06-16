@@ -144,4 +144,11 @@ def matrixMultiply(qi, y):
     return ans
 
 def XMatrix(r, co):
+    x = list()
+    co_len = len(co)
+    # initializing x
+    for i in range(co_len):
+        x.append([])
+    
+    # Do the rest 
     pass
