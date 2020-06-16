@@ -81,7 +81,7 @@ def columnMinus(cl1, cl2):
     return cl3
 
 def calculateU(cl, e):
-    return columnMultiply(columnDotProduct(cl, e), e)
+    return columnMultiply(e, columnDotProduct(cl, e))
 
 def calculateE(u):
     return columnMultiply(u, 1/columnNorm(u))
@@ -98,7 +98,7 @@ def QMatrix(a):
         a_n = a[a_index]
         u = a_n
         while k!=0:
-            u = columnMinus( u , columnMultiply( e_matrix[e_index] , columnDotProduct(a_n,e_matrix[e_index]) ) )
+            u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
             e_index+=1
             k-=1
         
@@ -170,13 +170,16 @@ def XMatrix(r, co):
 
 def writeX(answers):
     file = open("answers.txt", "w")
+    count = 0
     for ans in answers:
         if len(ans)==0:
+            count+=1
             file.write('N'+'\n')
         else:
             for i in ans:
                 file.write(str(i)+'\n')
     file.close()
+    return count
 
 def linearEquationSolver(file_name):
     samples = readDataFromFile(file_name)
@@ -193,6 +196,7 @@ def linearEquationSolver(file_name):
 
         answers.append(x)
     
-    writeX(answers)
+    n = writeX(answers)
+    print(n)
 
 linearEquationSolver("in.txt")
