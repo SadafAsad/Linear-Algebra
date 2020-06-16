@@ -150,5 +150,23 @@ def XMatrix(r, co):
     for i in range(co_len):
         x.append([])
     
-    # Do the rest 
-    pass
+    i = len(r)-1
+    while i>=0:
+        # does not have an answer
+        if r[i][i]==0:
+            if co[i][0]!=0:
+                return []
+            x[i] = 0
+        x[i] = co[i][0]/r[i][i]
+
+        count = i
+        while count>=0:
+            co[count][0] = co[count][0]-(r[count][i]*x[i])
+            count-=1
+
+        i-=1
+
+    return x
+
+
+        
