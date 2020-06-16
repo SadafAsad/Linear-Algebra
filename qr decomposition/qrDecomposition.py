@@ -57,7 +57,7 @@ def readDataFromFile(file_name):
 def columnNorm(cl):
     summ = 0
     for i in cl:
-        summ = summ + (i*2)
+        summ = summ + (i**2)
     return math.sqrt(summ)
 
 def columnDotProduct(cl1, cl2):
