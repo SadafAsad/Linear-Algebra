@@ -168,12 +168,15 @@ def XMatrix(r, co):
 
     return x
 
-def printX(x):
-    if len(x)==0:
-        print("N")
-    else:
-        for i in x:
-            print(i)
+def printX(answers):
+    file = open("answers.txt", "w")
+    for ans in answers:
+        if len(ans)==0:
+            file.write('N'+'\n')
+        else:
+            for i in ans:
+                file.write(str(i)+'\n')
+    file.close()
 
 def linearEquationSolver(file_name):
     samples = readDataFromFile(file_name)
