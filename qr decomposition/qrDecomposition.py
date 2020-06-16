@@ -128,9 +128,6 @@ def RMatrix(a, e):
 
     return r
 
-def QInverse(q):
-    pass
-
 def matrixMultiply(qi, y):
     ans = list()
     qi_rows_number = len(qi)
