@@ -174,4 +174,21 @@ def printX(x):
     else:
         for i in x:
             print(i)
-        
+
+def linearEquationSolver(file_name):
+    samples = readDataFromFile(file_name)
+    answers = list()
+
+    for sample in samples:
+        a = sample[0]
+        y = sample[1]
+
+        q = QMatrix(a)
+        r = RMatrix(a, q)
+        co = matrixMultiply(q, y)
+        x = XMatrix(r, co)
+
+        answers.append(x)
+    
+
+
