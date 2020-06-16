@@ -54,6 +54,8 @@ def readDataFromFile(file_name):
 
     return samples
 
+# print(readDataFromFile("sdf.txt"))
+
 def columnNorm(cl):
     summ = 0
     for i in cl:
@@ -105,8 +107,8 @@ def QMatrix(a):
         # e_n filling
         e_matrix.append(calculateE(u))
     
-    return e_matrix
-        
+    return e_matrix    
+
 def RMatrix(a, e):
     a_len = len(a)
     r = list()
@@ -156,6 +158,7 @@ def XMatrix(r, co):
         if r[i][i]==0:
             if co[i][0]!=0:
                 return []
+            # many solutions ...
             x[i] = 0
         x[i] = co[i][0]/r[i][i]
 
