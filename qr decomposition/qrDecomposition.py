@@ -107,3 +107,24 @@ def QMatrix(a):
     
     return e_matrix
         
+def RMatrix(a, e):
+    a_len = len(a)
+    r = list()
+    # initializing with zero
+    for i in range(a_len):
+        r_row = list()
+        for j in range(a_len):
+            r_row.append(0)
+        r.append(r_row)
+    
+    count = 0
+    cycle = 0
+    for i in range(a_len):
+        while count!=a_len:
+            r[i][count] = columnDotProduct(a[count], e[count])
+            count+=1
+        cycle+=1
+        count = cycle
+
+    return r
+    
