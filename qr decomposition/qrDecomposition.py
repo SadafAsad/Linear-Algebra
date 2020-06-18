@@ -119,14 +119,11 @@ def RMatrix(a, e):
             r_row.append(0)
         r.append(r_row)
     
-    count = 0
-    cycle = 0
     for i in range(a_len):
+        count = i
         while count!=a_len:
             r[i][count] = columnDotProduct(a[count], e[i])
             count+=1
-        cycle+=1
-        count = cycle
 
     return r
 
@@ -190,16 +187,22 @@ def linearEquationSolver(file_name):
 
     for sample in samples:
         a = sample[0]
+        print("a: "+str(a))
         y = sample[1]
+        print("y: "+str(y))
 
         q = QMatrix(a)
+        print("q: "+str(q))
         r = RMatrix(a, q)
+        print("r: "+str(r))
         co = matrixMultiply(q, y)
+        print("co: "+str(co))
         x = XMatrix(r, co)
+        print("co_af: "+str(co))
 
         answers.append(x)
     
     n = writeX(answers)
     print(n)
 
-linearEquationSolver("in.txt")
+linearEquationSolver("new.txt")
