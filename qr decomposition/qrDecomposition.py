@@ -54,8 +54,6 @@ def readDataFromFile(file_name):
 
     return samples
 
-# print(readDataFromFile("sdf.txt"))
-
 def columnNorm(cl):
     summ = 0
     for i in cl:
