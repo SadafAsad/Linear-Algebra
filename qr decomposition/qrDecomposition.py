@@ -58,26 +58,26 @@ def columnNorm(cl):
     summ = 0
     for i in cl:
         summ = summ + (i**2)
-    return math.sqrt(summ)
+    return float("{:.4f}".format(math.sqrt(summ)))
 
 def columnDotProduct(cl1, cl2):
     ans = 0
     count = len(cl1)
     for i in range(count):
         ans = ans+(cl1[i]*cl2[i])
-    return ans
+    return float("{:.4f}".format(ans))
 
 def columnMultiply(cl1, scalar):
     cl1_multiplied = list()
     for i in cl1:
-        cl1_multiplied.append(i*scalar)
+        cl1_multiplied.append(float("{:.4f}".format(i*scalar)))
     return cl1_multiplied
 
 def columnMinus(cl1, cl2):
     cl3 = list()
     count = len(cl1)
     for i in range(count):
-        cl3.append(cl1[i]-cl2[i])
+        cl3.append(float("{:.4f}".format(cl1[i]-cl2[i])))
     return cl3
 
 def calculateU(cl, e):
@@ -97,8 +97,17 @@ def QMatrix(a):
         k = a_index
         a_n = a[a_index]
         u = a_n
+        print("a2: "+str(u))
         while k!=0:
+            if a_index==2 and e_index==0:
+                print("(a2.e0)e0: "+str(calculateU(a_n, e_matrix[e_index])))
+            if a_index==2 and e_index==1:
+                print("(a2.e1)e1: "+str(calculateU(a_n, e_matrix[e_index])))
             u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
+            if a_index==2 and e_index==0:
+                print("a2-(a2.e0)e0: "+str(u))
+            if a_index==2 and e_index==1:
+                print("a2-(a2.e0)e0-(a2.e1)e1: "+str(u))
             e_index+=1
             k-=1
         
