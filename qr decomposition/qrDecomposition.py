@@ -58,26 +58,26 @@ def columnNorm(cl):
     summ = 0
     for i in cl:
         summ = summ + (i**2)
-    return float("{:.4f}".format(math.sqrt(summ)))
+    return float("{:.6f}".format(math.sqrt(summ)))
 
 def columnDotProduct(cl1, cl2):
     ans = 0
     count = len(cl1)
     for i in range(count):
         ans = ans+(cl1[i]*cl2[i])
-    return float("{:.4f}".format(ans))
+    return float("{:.6f}".format(ans))
 
 def columnMultiply(cl1, scalar):
     cl1_multiplied = list()
     for i in cl1:
-        cl1_multiplied.append(float("{:.4f}".format(i*scalar)))
+        cl1_multiplied.append(float("{:.6f}".format(i*scalar)))
     return cl1_multiplied
 
 def columnMinus(cl1, cl2):
     cl3 = list()
     count = len(cl1)
     for i in range(count):
-        cl3.append(float("{:.4f}".format(cl1[i]-cl2[i])))
+        cl3.append(float("{:.6f}".format(cl1[i]-cl2[i])))
     return cl3
 
 def calculateU(cl, e):
