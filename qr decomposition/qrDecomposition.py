@@ -151,8 +151,8 @@ def XMatrix(r, co):
     
     i = len(r)-1
     while i>=0:
-        # does not have an answer
         if r[i][i]==0:
+            # does not have an answer
             if co[i][0]!=0:
                 return []
             # many solutions ...
