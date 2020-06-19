@@ -86,38 +86,10 @@ def calculateU(cl, e):
 def calculateE(u):
     return columnMultiply(u, 1/columnNorm(u))
 
-def QMatrix(a):
+def QRMatrix(a):
     a_len = len(a)
     a_index = 0
     
-    e_matrix = list()
-    for a_index in range(a_len):
-        # u_n calculating
-        e_index = 0
-        k = a_index
-        a_n = a[a_index]
-        u = a_n
-        # print("a2: "+str(u))
-        while k!=0:
-            # if a_index==2 and e_index==0:
-            #     print("(a2.e0)e0: "+str(calculateU(a_n, e_matrix[e_index])))
-            # if a_index==2 and e_index==1:
-            #     print("(a2.e1)e1: "+str(calculateU(a_n, e_matrix[e_index])))
-            u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
-            # if a_index==2 and e_index==0:
-            #     print("a2-(a2.e0)e0: "+str(u))
-            # if a_index==2 and e_index==1:
-            #     print("a2-(a2.e0)e0-(a2.e1)e1: "+str(u))
-            e_index+=1
-            k-=1
-        
-        # e_n filling
-        e_matrix.append(calculateE(u))
-    
-    return e_matrix    
-
-def RMatrix(a, e):
-    a_len = len(a)
     r = list()
     # initializing with zero
     for i in range(a_len):
@@ -125,22 +97,36 @@ def RMatrix(a, e):
         for j in range(a_len):
             r_row.append(0)
         r.append(r_row)
-    
-    for i in range(a_len):
-        count = i
-        while count!=a_len:
-            len_e_i = len(e[i])
-            count_for_zero = 0
-            for ex in e[i]:
-                if ex<10**(-1000000000000) or ex>-10**(-1000000000000):
-                    count_for_zero+=1
-            if count_for_zero==len_e_i:
-                r[i][count] = 0
-            else:  
-                r[i][count] = columnDotProduct(a[count], e[i])
-            count+=1
 
-    return r
+    e_matrix = list()
+    for a_index in range(a_len):
+        # u_n calculating
+        e_index = 0
+        k = a_index
+        a_n = a[a_index]
+        u = a_n
+        while k!=0:
+            u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
+            e_index+=1
+            k-=1
+        # e_n filling
+        e_matrix.append(calculateE(u))
+
+        # r filling
+        count = a_index
+        while count!=a_len:
+            len_u = len(u)
+            count_for_zero = 0
+            for ux in u:
+                if abs(ux)<10**(-6):
+                    count_for_zero+=1
+            if count_for_zero==len_u:
+                r[e_index][count] = 0
+            else:  
+                r[e_index][count] = columnDotProduct(a[count], e_matrix[e_index])
+            count+=1
+    
+    return (e_matrix, r)    
 
 def matrixMultiply(qi, y):
     ans = list()
@@ -206,9 +192,8 @@ def linearEquationSolver(file_name):
         y = sample[1]
         # print("y: "+str(y))
 
-        q = QMatrix(a)
+        q, r = QRMatrix(a)
         # print("q: "+str(q))
-        r = RMatrix(a, q)
         # print("r: "+str(r))
         co = matrixMultiply(q, y)
         # print("co: "+str(co))
@@ -222,4 +207,4 @@ def linearEquationSolver(file_name):
     n = writeX(answers)
     print(n)
 
-linearEquationSolver("in.txt")
+linearEquationSolver("new.txt")
