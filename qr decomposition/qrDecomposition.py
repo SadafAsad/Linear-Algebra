@@ -58,26 +58,26 @@ def columnNorm(cl):
     summ = 0
     for i in cl:
         summ = summ + (i**2)
-    return float("{:.6f}".format(math.sqrt(summ)))
+    return math.sqrt(summ)
 
 def columnDotProduct(cl1, cl2):
     ans = 0
     count = len(cl1)
     for i in range(count):
         ans = ans+(cl1[i]*cl2[i])
-    return float("{:.6f}".format(ans))
+    return ans
 
 def columnMultiply(cl1, scalar):
     cl1_multiplied = list()
     for i in cl1:
-        cl1_multiplied.append(float("{:.6f}".format(i*scalar)))
+        cl1_multiplied.append(i*scalar)
     return cl1_multiplied
 
 def columnMinus(cl1, cl2):
     cl3 = list()
     count = len(cl1)
     for i in range(count):
-        cl3.append(float("{:.6f}".format(cl1[i]-cl2[i])))
+        cl3.append(cl1[i]-cl2[i])
     return cl3
 
 def calculateU(cl, e):
@@ -97,17 +97,17 @@ def QMatrix(a):
         k = a_index
         a_n = a[a_index]
         u = a_n
-        print("a2: "+str(u))
+        # print("a2: "+str(u))
         while k!=0:
-            if a_index==2 and e_index==0:
-                print("(a2.e0)e0: "+str(calculateU(a_n, e_matrix[e_index])))
-            if a_index==2 and e_index==1:
-                print("(a2.e1)e1: "+str(calculateU(a_n, e_matrix[e_index])))
+            # if a_index==2 and e_index==0:
+            #     print("(a2.e0)e0: "+str(calculateU(a_n, e_matrix[e_index])))
+            # if a_index==2 and e_index==1:
+            #     print("(a2.e1)e1: "+str(calculateU(a_n, e_matrix[e_index])))
             u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
-            if a_index==2 and e_index==0:
-                print("a2-(a2.e0)e0: "+str(u))
-            if a_index==2 and e_index==1:
-                print("a2-(a2.e0)e0-(a2.e1)e1: "+str(u))
+            # if a_index==2 and e_index==0:
+            #     print("a2-(a2.e0)e0: "+str(u))
+            # if a_index==2 and e_index==1:
+            #     print("a2-(a2.e0)e0-(a2.e1)e1: "+str(u))
             e_index+=1
             k-=1
         
@@ -129,7 +129,15 @@ def RMatrix(a, e):
     for i in range(a_len):
         count = i
         while count!=a_len:
-            r[i][count] = columnDotProduct(a[count], e[i])
+            len_e_i = len(e[i])
+            count_for_zero = 0
+            for ex in e[i]:
+                if ex<10**(-1000000000000) or ex>-10**(-1000000000000):
+                    count_for_zero+=1
+            if count_for_zero==len_e_i:
+                r[i][count] = 0
+            else:  
+                r[i][count] = columnDotProduct(a[count], e[i])
             count+=1
 
     return r
@@ -194,22 +202,24 @@ def linearEquationSolver(file_name):
 
     for sample in samples:
         a = sample[0]
-        print("a: "+str(a))
+        # print("a: "+str(a))
         y = sample[1]
-        print("y: "+str(y))
+        # print("y: "+str(y))
 
         q = QMatrix(a)
-        print("q: "+str(q))
+        # print("q: "+str(q))
         r = RMatrix(a, q)
-        print("r: "+str(r))
+        # print("r: "+str(r))
         co = matrixMultiply(q, y)
-        print("co: "+str(co))
+        # print("co: "+str(co))
         x = XMatrix(r, co)
-        print("co_af: "+str(co))
+        # print("co_af: "+str(co))
+
+        # print("to check: "+str(matrixMultiply(q,r)))
 
         answers.append(x)
     
     n = writeX(answers)
     print(n)
 
-linearEquationSolver("new.txt")
+linearEquationSolver("in.txt")
