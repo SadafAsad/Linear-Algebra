@@ -159,7 +159,6 @@ def XMatrix(q, r, y):
             if co[i][0]!=0:
                 return []
             # many solutions ...
-            print("many solution")
             x[i] = 0
         x[i] = co[i][0]/r[i][i]
 
