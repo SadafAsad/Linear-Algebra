@@ -21,7 +21,7 @@ def readDataFromFile(file_name):
         for j_index in range(m):
             a.append(list())
 
-        # filling a
+        # filling a transpose
         j_index = 0
         element_counter = 0
         for element_counter in range(n*m):
@@ -88,29 +88,29 @@ def calculateE(u):
 
 def QRMatrix(a):
     a_len = len(a)
-    a_index = 0
     
     r = list()
-    # initializing with zero
+    # initializing r with zero
     for i in range(a_len):
         r_row = list()
         for j in range(a_len):
             r_row.append(0)
         r.append(r_row)
 
-    e_matrix = list()
+    a_index = 0
+    q = list()
     for a_index in range(a_len):
-        # u_n calculating
+        # u calculating
         e_index = 0
         k = a_index
         a_n = a[a_index]
         u = a_n
         while k!=0:
-            u = columnMinus( u , calculateU(a_n, e_matrix[e_index]) )
+            u = columnMinus( u , calculateU(a_n,    q[e_index]) )
             e_index+=1
             k-=1
-        # e_n filling
-        e_matrix.append(calculateE(u))
+        # q filling
+        q.append(calculateE(u))
 
         # r filling
         count = a_index
@@ -118,15 +118,15 @@ def QRMatrix(a):
             len_u = len(u)
             count_for_zero = 0
             for ux in u:
-                if abs(ux)<10**(-6):
+                if abs(ux)<10**(-14):
                     count_for_zero+=1
             if count_for_zero==len_u:
                 r[e_index][count] = 0
             else:  
-                r[e_index][count] = columnDotProduct(a[count], e_matrix[e_index])
+                r[e_index][count] = columnDotProduct(a[count],  q[e_index])
             count+=1
     
-    return (e_matrix, r)    
+    return  (q, r)    
 
 def matrixMultiply(qi, y):
     ans = list()
@@ -143,9 +143,11 @@ def matrixMultiply(qi, y):
         ans.append(row_mult)
     return ans
 
-def XMatrix(r, co):
+def XMatrix(q, r, y):
     x = list()
+    co = matrixMultiply(q, y)
     co_len = len(co)
+
     # initializing x
     for i in range(co_len):
         x.append([])
@@ -157,9 +159,11 @@ def XMatrix(r, co):
             if co[i][0]!=0:
                 return []
             # many solutions ...
+            print("many solution")
             x[i] = 0
         x[i] = co[i][0]/r[i][i]
 
+        # subtracting x[i] from all linear equations above
         count = i
         while count>=0:
             co[count][0] = co[count][0]-(r[count][i]*x[i])
@@ -171,16 +175,13 @@ def XMatrix(r, co):
 
 def writeX(answers):
     file = open("answers.txt", "w")
-    count = 0
     for ans in answers:
         if len(ans)==0:
-            count+=1
             file.write('N'+'\n')
         else:
             for i in ans:
                 file.write(str(i)+'\n')
     file.close()
-    return count
 
 def linearEquationSolver(file_name):
     samples = readDataFromFile(file_name)
@@ -188,23 +189,12 @@ def linearEquationSolver(file_name):
 
     for sample in samples:
         a = sample[0]
-        # print("a: "+str(a))
         y = sample[1]
-        # print("y: "+str(y))
 
         q, r = QRMatrix(a)
-        # print("q: "+str(q))
-        # print("r: "+str(r))
-        co = matrixMultiply(q, y)
-        # print("co: "+str(co))
-        x = XMatrix(r, co)
-        # print("co_af: "+str(co))
-
-        # print("to check: "+str(matrixMultiply(q,r)))
-
+        x = XMatrix(q, r, y)
         answers.append(x)
     
-    n = writeX(answers)
-    print(n)
+    writeX(answers)
 
 linearEquationSolver("new.txt")
