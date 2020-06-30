@@ -196,4 +196,4 @@ def linearEquationSolver(file_name):
     
     writeX(answers)
 
-linearEquationSolver("new.txt")
+linearEquationSolver("in.txt")
